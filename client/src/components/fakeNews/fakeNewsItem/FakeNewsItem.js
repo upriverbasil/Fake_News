@@ -12,14 +12,41 @@ import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { useDispatch } from "react-redux";
 import moment from "moment";
-
+import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import ThumbDownAltOutlined from '@material-ui/icons/ThumbDownAltOutlined';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
 import { likeNews, dislikeNews } from "../../../actions/fakeNews";
 import useStyles from "./styles";
 
 const FakeNewsItem = ({ news }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem('profile'))
+  const Likes = () => {
+    if (news.upvotes.length > 0) {
+      return news.upvotes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+        ? (
+          <><ThumbUpAltIcon fontSize="small" />&nbsp;{news.upvotes.length > 2 ? `You and ${news.upvotes.length - 1} others` : `${news.upvotes.length} like${news.upvotes.length > 1 ? 's' : ''}` }</>
+        ) : (
+          <><ThumbUpAltOutlined fontSize="small" />&nbsp;{news.upvotes.length} {news.upvotes.length === 1 ? 'Like' : 'Likes'}</>
+        );
+    }
 
+    return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
+  };
+  const DisLikes = () => {
+    if (news.downvotes.length > 0) {
+      return news.downvotes.find((like) => like === (user?.result?.googleId || user?.result?._id))
+        ? (
+          <><ThumbDownAltIcon fontSize="small" />&nbsp;{news.downvotes.length > 2 ? `You and ${news.downvotes.length - 1} others` : `${news.downvotes.length} Dislike${news.downvotes.length > 1 ? 's' : ''}` }</>
+        ) : (
+          <><ThumbDownAltOutlined fontSize="small" />&nbsp;{news.downvotes.length} {news.downvotes.length === 1 ? 'DisLike' : 'DisLikes'}</>
+        );
+    }
+
+    return <><ThumbDownAltOutlined fontSize="small" />&nbsp;DisLike</>;
+  };
   return (
     <Card className={classes.card}>
       <CardActionArea href={news.articleLink} target="_blank">
@@ -59,19 +86,16 @@ const FakeNewsItem = ({ news }) => {
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button
-          size="small"
-          color="primary"
-          onClick={() => dispatch(likeNews(news._id))}
-        >
-          <ArrowUpwardIcon fontSize="small" /> &nbsp; {news.upvoteCount}
+        <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(likeNews(news._id))}>
+            <Likes />
         </Button>
         <Button
           size="small"
           color="primary"
+          disabled={!user?.result}
           onClick={() => dispatch(dislikeNews(news._id))}
         >
-          <ArrowDownwardIcon fontSize="small" /> &nbsp; {news.downvoteCount}
+          <DisLikes/>
         </Button>
       </CardActions>
     </Card>

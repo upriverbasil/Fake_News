@@ -14,23 +14,44 @@ export const getFakeNews = async(req,res) => {
 export const likeNews = async(req, res) => {
     const { id } = req.params;
 
+    if (!req.userId) {
+        return res.json({ message: "Unauthenticated" });
+    }
+
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
-    
     const news = await fakeNews.findById(id);
 
-    const updatedNews = await fakeNews.findByIdAndUpdate(id, { upvoteCount: news.upvoteCount + 1 }, { new: true });
+    const index = news.upvotes.findIndex((id) => id ===String(req.userId));
+
+    if (index === -1) {
+      news.upvotes.push(req.userId);
+    } else {
+      news.upvotes = news.upvotes.filter((id) => id !== String(req.userId));
+    }
+
+    const updatedNews = await fakeNews.findByIdAndUpdate(id,news, { new: true });
     
-    res.json(updatedNews);
+    res.status(200).json(updatedNews);
 }
 
 export const dislikeNews = async(req, res) => {
     const { id } = req.params;
-
+    if (!req.userId) {
+        return res.json({ message: "Unauthenticated" });
+    }
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
     
     const news = await fakeNews.findById(id);
 
-    const updatedNews = await fakeNews.findByIdAndUpdate(id, { downvoteCount: news.downvoteCount + 1 }, { new: true });
+    const index = news.downvotes.findIndex((id) => id ===String(req.userId));
+
+    if (index === -1) {
+      news.downvotes.push(req.userId);
+    } else {
+      news.downvotes = news.downvotes.filter((id) => id !== String(req.userId));
+    }
+
+    const updatedNews = await fakeNews.findByIdAndUpdate(id,news, { new: true });
     
-    res.json(updatedNews);
+    res.status(200).json(updatedNews);
 }

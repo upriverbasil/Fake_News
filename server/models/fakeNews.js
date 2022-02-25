@@ -14,13 +14,13 @@ const fakeNewsSchema = mongoose.Schema({
     audioLinks:[String],
     videoLinks:[String],
     links_in_text:[String],
-    upvoteCount: {
-        type: Number,
-        default: 0
+    upvotes: {
+        type: [String],
+        default: []
     },
-    downvoteCount: {
-        type: Number,
-        default: 0
+    downvotes: {
+        type: [String],
+        default: []
     },
     
 })

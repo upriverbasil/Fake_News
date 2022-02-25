@@ -5,6 +5,7 @@ import { useNavigate,useLocation } from "react-router-dom";
 import useStyles from "./styles";
 import fake_news from "../../images/fakenews.png";
 import {Link} from 'react-router-dom';
+import decode from 'jwt-decode';
 
 const Navbar = () => {
     const classes = useStyles();
@@ -14,6 +15,11 @@ const Navbar = () => {
     const location = useLocation();
     useEffect(()=>{
         const token = user?.token;
+        if (token) {
+            const decodedToken = decode(token);
+      
+            if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+          }
         setUser(JSON.parse(localStorage.getItem('profile')))
     },[location])
 

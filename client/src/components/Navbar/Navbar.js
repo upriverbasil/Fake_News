@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate,useLocation } from "react-router-dom";
 import useStyles from "./styles";
 import fake_news from "../../images/fakenews.png";
+import fake_news_text from "../../images/FakeNewsText.png";
 import {Link} from 'react-router-dom';
 import decode from 'jwt-decode';
 
@@ -31,10 +32,10 @@ const Navbar = () => {
     return(
         
         <AppBar className={classes.appBar} position="static" color="inherit">
-            <div className={classes.brandContainer}>
-                <img className={classes.image} src={fake_news} alt="fake News" height="40" />
-                <Typography component={Link} to="/ " className={classes.heading} variant="h3" align="center">FAKE NEWS</Typography>
-            </div>
+            <Link to="/" className={classes.brandContainer}>
+                <img src={fake_news_text} alt="fake_news_text" height="45px" />
+                <img className={classes.image} src={fake_news} alt="fake News" height="40px" />
+            </Link>
             <Toolbar className={classes.Toolbar}>
                 {user ? (
                     <div className={classes.profile}> 

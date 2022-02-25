@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 export const getFakeNews = async(req,res) => {
     try {
         const FakeNews = await fakeNews.find().sort({_id:1}).limit(100);
-        
+        // const FakeNews = await fakeNews.find().sort((a, b) => new moment(a.publishDate, "DD-MM-YYYY HH:mm:ss") - new moment(b.publishDate, "DD-MM-YYYY HH:mm:ss")).limit(100);
+
         res.status(200).json(FakeNews)
     } catch (error) {
         res.status(404).json(FakeNews)

@@ -11,6 +11,7 @@ API.interceptors.request.use((req) => {
   });
 
 export const fetchNews = () => API.get('/fake-news');
+export const fetchNewsBySearch = (searchQuery) => API.get(`/fake-news/search?searchQuery${searchQuery.search || 'none'}`);
 export const likeNews = (id) => API.patch(`/fake-news/${id}/likeNews`)
 export const dislikeNews = (id) => API.patch(`/fake-news/${id}/dislikeNews`)
 

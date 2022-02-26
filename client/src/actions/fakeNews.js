@@ -3,13 +3,24 @@ import * as api from '../api'
 
 //action creators
 export const getFakeNews = () => async(dispatch) => {
-    
     try {
         const {data} = await api.fetchNews();
         dispatch({type:'FETCH_ALL',payload:data})
     } catch (error) {
         console.log(error.message)
     }
+}
+
+
+export const getFakeNewsBySearch = (searchQuery) => async(dispatch) => {
+  try {
+      const { data: { data } } = await api.fetchNewsBySearch(searchQuery);
+
+      console.log(data)
+      // dispatch({type:'FETCH_ALL',payload:data})
+  } catch (error) {
+      console.log(error.message)
+  }
 }
 
 export const likeNews = (id) => async (dispatch) => {

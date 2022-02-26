@@ -15,11 +15,11 @@ const App = () => {
       <Container maxWidth="xl">
         <Navbar />
         <Routes>
-        <Route path="/" render={() => <Navigate replace to="/news" />} />
+          <Route path="/" element={<Navigate to="/news" />} />
           <Route path="/news" element={<Home />} />
           <Route path="/news/search" element={<Home />} />
           {/* <Route path="/news/:id" component={NewsDetails}/> */}
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/auth" element={!user ? <Auth /> : <Navigate to="/news" />} />
         </Routes>
       </Container>
     </BrowserRouter>

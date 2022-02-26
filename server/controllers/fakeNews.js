@@ -12,6 +12,22 @@ export const getFakeNews = async(req,res) => {
     }
 }
 
+export const getFakeNewsBySearch = async(req, res) => {
+  const { searchQuery } = req.query
+
+  try {
+    const title = new RegExp(searchQuery, 'i');
+
+    console.log(searchQuery)
+
+    const news = await fakeNews.find({ title }).limit(10);
+
+    res.json({ data: news });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
+
 export const likeNews = async(req, res) => {
     const { id } = req.params;
 

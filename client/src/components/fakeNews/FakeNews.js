@@ -8,13 +8,11 @@ import useStyles from './styles'
 
 const Fakenews = () => {
 
-    const fakenews = useSelector((state)=>state.fakeNews);
+    const {fakenews} = useSelector((state)=>state.fakeNews);
     const classes = useStyles();
 
-    // console.log(fakenews)
-
     return(
-        !fakenews.length ? <CircularProgress alightItems="center"/> : (
+        !fakenews?.length ? <CircularProgress alightItems="center"/> : (
             <Grid className={classes.container} container alignItems="stretch" spacing={3}>
                 {fakenews.map((news) =>(
                     <Grid key={news._id} item xs={12} sm={12} md={6} lg={3}>

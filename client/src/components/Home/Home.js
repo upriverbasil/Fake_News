@@ -30,6 +30,7 @@ const Home = () => {
   const searchPost = () => {
     if (search.trim()) {
       dispatch(getFakeNewsBySearch( { search }))
+      navigate(`/fake-news/search?searchQuery=${search || 'none'}`);
     } else {
       navigate('/');
     }
@@ -69,7 +70,7 @@ const Home = () => {
             </AppBar>
             <Trending />
             <Paper className={classes.pagination} elevation={6}>
-              <Pagination />
+              <Pagination page={page} />
             </Paper>
           </Grid>
         </Grid>

@@ -2,10 +2,11 @@ import * as api from '../api'
 
 
 //action creators
-export const getFakeNews = () => async(dispatch) => {
+export const getFakeNews = (page) => async(dispatch) => {
     try {
-        const {data} = await api.fetchNews();
-        dispatch({type:'FETCH_ALL',payload:data})
+        const {data} = await api.fetchNews(page);
+
+        dispatch({type: 'FETCH_ALL',payload: data})
     } catch (error) {
         console.log(error.message)
     }
@@ -14,10 +15,9 @@ export const getFakeNews = () => async(dispatch) => {
 
 export const getFakeNewsBySearch = (searchQuery) => async(dispatch) => {
   try {
-      const { data: { data } } = await api.fetchNewsBySearch(searchQuery);
+    const { data: { data } } = await api.fetchNewsBySearch(searchQuery);
 
-      console.log(data)
-      // dispatch({type:'FETCH_ALL',payload:data})
+    dispatch({type:'FETCH_BY_SEARCH', payload:data})
   } catch (error) {
       console.log(error.message)
   }

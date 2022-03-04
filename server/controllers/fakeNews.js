@@ -2,14 +2,20 @@ import fakeNews from "../models/fakeNews.js";
 import mongoose from 'mongoose';
 
 export const getFakeNews = async(req,res) => {
-    try {
-        const FakeNews = await fakeNews.find().sort({_id:1}).limit(100);
-        // const FakeNews = await fakeNews.find().sort((a, b) => new moment(a.publishDate, "DD-MM-YYYY HH:mm:ss") - new moment(b.publishDate, "DD-MM-YYYY HH:mm:ss")).limit(100);
+  const { page } = req.query
 
-        res.status(200).json(FakeNews)
-    } catch (error) {
-        res.status(404).json(FakeNews)
-    }
+  try {
+    const LIMIT = 8;
+    const startIndex = (Number(page) - 1) * LIMIT;    // starting fake news index
+    const total = await fakeNews.countDocuments({});
+
+    const news = await fakeNews.find().sort({_id: 1}).limit(LIMIT).skip(startIndex);
+    // const FakeNews = await fakeNews.find().sort((a, b) => new moment(a.publishDate, "DD-MM-YYYY HH:mm:ss") - new moment(b.publishDate, "DD-MM-YYYY HH:mm:ss")).limit(100);
+
+    res.status(200).json({ data: news, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
+  } catch (error) {
+    res.status(404).json(FakeNews)
+  }
 }
 
 export const getFakeNewsBySearch = async(req, res) => {
@@ -18,9 +24,7 @@ export const getFakeNewsBySearch = async(req, res) => {
   try {
     const title = new RegExp(searchQuery, 'i');
 
-    console.log(searchQuery)
-
-    const news = await fakeNews.find({ title }).limit(10);
+    const news = await fakeNews.find({ title });
 
     res.json({ data: news });
   } catch (error) {

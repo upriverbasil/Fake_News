@@ -1,4 +1,4 @@
-export default (state=[],action) => {
+export default (state=[], action) => {
     switch (action.type) {
         case 'FETCH_ALL':
             return {
@@ -11,7 +11,7 @@ export default (state=[],action) => {
             return {...state, fakenews: action.payload};
         case 'LIKE':
         case 'DISLIKE':
-            return state.map((newsItem) => (newsItem._id === action.payload._id ? action.payload : newsItem));
+            return { ...state, fakenews: state.fakenews.map((newsItem) => (newsItem._id === action.payload._id ? action.payload : newsItem)) };
         default:
             return state;
     }

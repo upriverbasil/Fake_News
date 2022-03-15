@@ -8,7 +8,7 @@ import fake_news_text from "../../images/FakeNewsText.png";
 import {Link} from 'react-router-dom';
 import decode from 'jwt-decode';
 
-const Navbar = () => {
+const Navbar = (props) => {
     const classes = useStyles();
     const [user,setUser] = useState(JSON.parse(localStorage.getItem('profile')))
     const navigate = useNavigate();
@@ -26,9 +26,11 @@ const Navbar = () => {
 
     const logout = () => {
         dispatch({type:'LOGOUT'})
-        navigate("/")
         setUser(null)
+        // navigate("/fake-news"
+        props.setuser(null)
     }
+   
     return(
         
         <AppBar className={classes.appBar} position="static" color="inherit">

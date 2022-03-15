@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {GoogleLogin} from 'react-google-login'
@@ -12,11 +12,13 @@ import {signup,signin} from "../../actions/auth"
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 const SignUp = () => {
+ 
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
   const [formData,setFormData] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
 
   const classes = useStyles();
   
@@ -47,7 +49,6 @@ const SignUp = () => {
   const googleSuccess = async(res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
-    
     try{
       dispatch({type:'AUTH',data:{result,token}})
       navigate("/")

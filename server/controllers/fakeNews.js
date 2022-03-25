@@ -9,8 +9,7 @@ export const getFakeNews = async(req,res) => {
     const startIndex = (Number(page) - 1) * LIMIT;    // starting fake news index
     const total = await fakeNews.countDocuments({});
 
-    const news = await fakeNews.find().sort({_id: 1}).limit(LIMIT).skip(startIndex);
-    // const FakeNews = await fakeNews.find().sort((a, b) => new moment(a.publishDate, "DD-MM-YYYY HH:mm:ss") - new moment(b.publishDate, "DD-MM-YYYY HH:mm:ss")).limit(100);
+    const news = await fakeNews.find().sort({_id: -1}).limit(LIMIT).skip(startIndex);
 
     res.status(200).json({ data: news, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
   } catch (error) {
@@ -24,7 +23,7 @@ export const getFakeNewsBySearch = async(req, res) => {
   try {
     const title = new RegExp(searchQuery, 'i');
 
-    const news = await fakeNews.find({ title });
+    const news = await fakeNews.find({ title }).sort({_id: -1});
 
     res.json({ data: news });
   } catch (error) {

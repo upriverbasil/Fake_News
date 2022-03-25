@@ -55,7 +55,7 @@ const FakeNewsItem = ({ news }) => {
           image={
             news.imageLinks == null
               ? "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
-              : ( news.imageLinks[0].startsWith("https://") ? news.imageLinks[0] : "https://" + news.imageLinks[0] )||
+              : ( news.imageLinks[0].startsWith("https://") ? news.imageLinks[0] : "https://" + news.imageLinks[0] ) ||
                 "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
           }
           title={news.title}

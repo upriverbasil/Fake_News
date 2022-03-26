@@ -23,6 +23,17 @@ export const getFakeNewsBySearch = (searchQuery) => async(dispatch) => {
   }
 }
 
+export const trending = () => async(dispatch) => {
+  console.log("pppp")
+  try {
+    const {data} = await api.trending();
+    console.log(data,"pppp")
+    dispatch({type:'TRENDING',payload:data})
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
 export const likeNews = (id) => async (dispatch) => {
     try {
       const { data } = await api.likeNews(id);

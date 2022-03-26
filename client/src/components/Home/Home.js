@@ -15,8 +15,9 @@ import { useDispatch } from "react-redux";
 import FakeNews from "../fakeNews/FakeNews";
 import Pagination from "../Pagination/Pagination";
 import Trending from "../Trending/Trending";
-import { getFakeNews, getFakeNewsBySearch } from "../../actions/fakeNews";
+import { getFakeNews, getFakeNewsBySearch,trending } from "../../actions/fakeNews";
 import useStyles from "./styles";
+
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -32,7 +33,9 @@ const Home = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
+    dispatch(trending())
     dispatch(getFakeNews());
+    
   }, [dispatch]);
 
   const searchPost = () => {

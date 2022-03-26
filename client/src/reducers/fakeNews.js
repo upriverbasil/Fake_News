@@ -9,6 +9,9 @@ export default (state=[], action) => {
             };
         case 'FETCH_BY_SEARCH':
             return {...state, fakenews: action.payload};
+        case 'TRENDING':
+            console.log(state,"trending")
+            return {...state, trending:action.payload};
         case 'LIKE':
         case 'DISLIKE':
             return { ...state, fakenews: state.fakenews.map((newsItem) => (newsItem._id === action.payload._id ? action.payload : newsItem)) };

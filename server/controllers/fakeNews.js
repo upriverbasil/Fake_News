@@ -1,4 +1,5 @@
 import fakeNews from "../models/fakeNews.js";
+import user from "../models/user.js"
 import mongoose from 'mongoose';
 
 export const getFakeNews = async(req,res) => {
@@ -31,6 +32,18 @@ export const getFakeNewsBySearch = async(req, res) => {
   }
 }
 
+export const trending = async(req, res) => {
+  try {
+    const news = await fakeNews.find().sort({"upvotes":-1}).limit(1)
+    console.log(news)
+    res.json({ data: news });
+
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+ 
+}
+
 export const likeNews = async(req, res) => {
     const { id } = req.params;
 
@@ -48,7 +61,7 @@ export const likeNews = async(req, res) => {
     } else {
       news.upvotes = news.upvotes.filter((id) => id !== String(req.userId));
     }
-
+    
     const updatedNews = await fakeNews.findByIdAndUpdate(id,news, { new: true });
     
     res.status(200).json(updatedNews);
@@ -70,7 +83,7 @@ export const dislikeNews = async(req, res) => {
     } else {
       news.downvotes = news.downvotes.filter((id) => id !== String(req.userId));
     }
-
+    
     const updatedNews = await fakeNews.findByIdAndUpdate(id,news, { new: true });
     
     res.status(200).json(updatedNews);

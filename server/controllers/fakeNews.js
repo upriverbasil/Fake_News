@@ -14,7 +14,20 @@ export const getFakeNews = async(req,res) => {
 
     res.status(200).json({ data: news, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
   } catch (error) {
-    res.status(404).json(FakeNews)
+    res.status(404).json({ message: error.message })
+  }
+}
+
+export const getFakeNewsItem = async(req, res) => {
+  const { id } = req.query
+
+  try {
+    const news = await fakeNews.findById(id);
+
+    console.log(id)
+    res.status(200).json(news);
+  } catch (error) {
+    res.status(404).json({ message: error.message })
   }
 }
 

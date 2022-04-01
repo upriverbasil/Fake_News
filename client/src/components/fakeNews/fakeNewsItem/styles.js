@@ -50,4 +50,8 @@ export default makeStyles({
     justifyContent: 'space-between',
     color: 'green',
   },
+  cardAction: {
+    display: 'block',
+    textAlign: 'initial',
+  },
 });

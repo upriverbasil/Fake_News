@@ -8,6 +8,7 @@ const fakeNewsSchema = mongoose.Schema({
     tags:[String],
     title:String,
     summary:String,
+    content:[String],
     authorName:[String],
     authorWebsite:[String],
     additionalLinks:[String],

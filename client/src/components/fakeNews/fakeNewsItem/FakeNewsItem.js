@@ -126,7 +126,7 @@ const FakeNewsItem = ({ news }) => {
         </div>
         <div className={classes.details}>
           <Typography variant="body2" color="textSecondary" component="h2">
-            {news.tags == null ? "No tags" : news.tags.map((tag) => `#${tag} `)}
+            {news.tags == null ? "No tags" : news.tags.map((tag) => `#${tag.split(' ').join('_')} `)}
           </Typography>
         </div>
         <Typography

@@ -33,7 +33,7 @@ const FakeNewsDetails = () => {
       newsImage = fakenewsitem.imageLinks[0];
     else newsImage = "https://" + fakenewsitem.imageLinks[0];
   }
-
+  
   useEffect(() => {
     dispatch(getFakeNewsItem(id));
   }, [id]);
@@ -55,6 +55,13 @@ const FakeNewsDetails = () => {
               <Typography variant="h3" component="h2">
                 {fakenewsitem?.title}
               </Typography>
+              {fakenewsitem.authorName ? (
+                <Typography variant="h6">
+                  Published by: {fakenewsitem.authorName}
+                </Typography>
+              ) : (
+                <></>
+              )}
               <Typography
                 gutterBottom
                 variant="h6"
@@ -62,28 +69,26 @@ const FakeNewsDetails = () => {
                 component="h2"
               >
                 {fakenewsitem.tags
-                  ? fakenewsitem.tags.map((tag) => `#${tag} `)
-                  : "NO TAGS"}
-              </Typography>
-              <Typography gutterBottom variant="body1" component="p">
-                {fakenewsitem?.summary
-                  ? fakenewsitem?.summary
-                  : fakenewsitem?.content}
-              </Typography>
-              <Typography variant="h6">
-                Created by: {fakenewsitem.authorName}
+                  ? fakenewsitem.tags.map(
+                      (tag) => `#${tag.split(" ").join("_")} `
+                    )
+                  : <></>}
               </Typography>
               <Typography variant="body1">
                 {moment(
                   fakenewsitem.publishDate,
                   "DD-MM-YYYY HH:mm:ss"
                 ).fromNow()}
+                <Typography gutterBottom variant="body1" component="p">
+                  {fakenewsitem?.summary
+                    ? fakenewsitem?.summary
+                    : fakenewsitem?.content}
+                </Typography>
               </Typography>
-              <Divider style={{ margin: "20px 0" }} />
-              <Typography variant="body1">
-                <strong>Comments - coming soon!</strong>
+
+              <Typography variant="h6">
+                Read more on  <a href={fakenewsitem?.articleLink} target="_blank">{fakenewsitem?.websiteName.split("_").join(" ")}</a>.
               </Typography>
-              <Divider style={{ margin: "20px 0" }} />
             </div>
           </Grid>
 
@@ -99,6 +104,13 @@ const FakeNewsDetails = () => {
                 <></>
               )}
             </div>
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={12}>
+            <Divider style={{ margin: "10px 0 20px 0" }} />
+            <Typography variant="body1">
+              <strong>Comments - coming soon!</strong>
+            </Typography>
           </Grid>
         </Grid>
       </div>

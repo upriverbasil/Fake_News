@@ -13,25 +13,27 @@ import { getFakeNewsItem } from "../../actions/fakeNews";
 import useStyles from "./styles";
 
 const FakeNewsDetails = () => {
-  const { newsItem, news, isLoading } = useSelector((state) => state.fakeNews);
+  const  fakenewsitem  = useSelector((state) => {return(state?.fakeNews)})?.fakenewsitem;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const classes = useStyles();
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getFakeNewsItem(id));
-    console.log(id)
-  }, [id]);
+    
+    dispatch(getFakeNewsItem(id))
+    console.log(fakenewsitem)
+    console.log(moment(fakenewsitem?.publishDate).fromNow())
+  },[id]);
 
-  if (!newsItem) return null;
+  
 
-  return (
-    <Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
+  return (  !fakenewsitem?(<div></div>):
+    (<Paper style={{ padding: "20px", borderRadius: "15px" }} elevation={6}>
       <div className={classes.card}>
         <div className={classes.section}>
           <Typography variant="h3" component="h2">
-            {newsItem.title}
+            {fakenewsitem?.title}
           </Typography>
           <Typography
             gutterBottom
@@ -39,14 +41,14 @@ const FakeNewsDetails = () => {
             color="textSecondary"
             component="h2"
           >
-            {newsItem.tags.map((tag) => `#${tag} `)}
+            {fakenewsitem.tags ? fakenewsitem.tags.map((tag) => `#${tag} `):"NO TAGS"}
           </Typography>
           <Typography gutterBottom variant="body1" component="p">
-            {newsItem.summary}
+            {fakenewsitem?.summary}
           </Typography>
-          <Typography variant="h6">Created by: {newsItem.authorName}</Typography>
+          <Typography variant="h6">Created by: {fakenewsitem.authorName}</Typography>
           <Typography variant="body1">
-            {moment(newsItem.publishDate).fromNow()}
+            {moment(fakenewsitem?.publishDate).fromNow()}
           </Typography>
           <Divider style={{ margin: "20px 0" }} />
           <Typography variant="body1">
@@ -62,15 +64,15 @@ const FakeNewsDetails = () => {
           <img
             className={classes.media}
             src={
-              newsItem.topImage ||
+              fakenewsitem?.topImage || fakenewsitem?.imageLinks[0] ||
               "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
             }
-            alt={newsItem.title}
+            alt={fakenewsitem?.title}
           />
         </div>
       </div>
     </Paper>
-  );
+  ));
 };
 
 export default FakeNewsDetails;

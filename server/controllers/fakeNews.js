@@ -16,15 +16,17 @@ export const getFakeNews = async(req,res) => {
   } catch (error) {
     res.status(404).json({ message: error.message })
   }
+  
 }
 
 export const getFakeNewsItem = async(req, res) => {
-  const { id } = req.query
+  const { id } = req.params
 
   try {
+    // console.log(req)
     const news = await fakeNews.findById(id);
 
-    console.log(id)
+    // console.log(id)
     res.status(200).json(news);
   } catch (error) {
     res.status(404).json({ message: error.message })
@@ -48,7 +50,7 @@ export const getFakeNewsBySearch = async(req, res) => {
 export const trending = async(req, res) => {
   try {
     const news = await fakeNews.find().sort({"upvotes":-1}).limit(5)
-    console.log(news)
+    // console.log(news)
     res.json({ data: news });
 
   } catch (error) {

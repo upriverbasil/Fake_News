@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid, CircularProgress } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
@@ -8,7 +8,7 @@ import useStyles from "./styles";
 const Fakenews = () => {
   const { fakenews } = useSelector((state) => state.fakeNews);
   const classes = useStyles();
-
+  // useEffect(()=>{console.log("oooo")},)
   return !fakenews?.length ? (
     <CircularProgress alightItems="center" />
   ) : (

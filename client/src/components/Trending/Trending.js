@@ -9,7 +9,7 @@ const Trending = () => {
   const trending = useSelector((state)=>(state.fakeNews))?.trending?.data
 
   useEffect(() => {
-    console.log(trending, "ooooo");
+    // console.log(trending, "ooooo");
   }, [trending]);
 
   return (

@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import FakeNews from "../fakeNews/FakeNews";
 import Pagination from "../Pagination/Pagination";
 import Trending from "../Trending/Trending";
-import { getFakeNews, getFakeNewsBySearch,trending } from "../../actions/fakeNews";
+import { getFakeNews, trending } from "../../actions/fakeNews";
 import useStyles from "./styles";
 
 
@@ -27,31 +27,13 @@ const Home = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const query = useQuery();
-  const navigate = useNavigate();
   const page = query.get("page") || 1;
-  const searchQuery = query.get("searchQuery");
-  const [search, setSearch] = useState("");
 
   useEffect(() => {
     dispatch(trending())
     dispatch(getFakeNews());
     
   }, [dispatch]);
-
-  const searchPost = () => {
-    if (search.trim()) {
-      dispatch(getFakeNewsBySearch({ search }));
-      navigate(`/fake-news/search?searchQuery=${search || "none"}`);
-    } else {
-      navigate("/");
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      searchPost();
-    }
-  };
 
   return (
     <Grow in>
@@ -65,34 +47,11 @@ const Home = () => {
         >
           <Grid item xs={12} sm={6} md={9}>
             <FakeNews />
+            <Paper className={classes.pagination} elevation={6}>
+              <Pagination page={page} variant="outlined" shape="rounded" />
+            </Paper>
           </Grid>
           <Grid item xs={12} sm={6} md={3}>
-            <AppBar
-              className={classes.appBarSearch}
-              position="static"
-              color="inherit"
-            >
-              <TextField
-                name="search"
-                variant="outlined"
-                label="Search Fake News"
-                onKeyPress={handleKeyPress}
-                fullWidth
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <Button
-                onClick={searchPost}
-                className={classes.searchButton}
-                variant="contained"
-                color="primary"
-              >
-                Search
-              </Button>
-            </AppBar>
-            <Paper className={classes.pagination} elevation={6}>
-              <Pagination page={page} />
-            </Paper>
             <Trending />
           </Grid>
         </Grid>

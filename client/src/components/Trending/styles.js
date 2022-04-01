@@ -12,4 +12,10 @@ export default makeStyles((theme) => ({
       flexDirection: 'column-reverse',
     },
   },
+  link: {
+    textDecoration: 'none',
+  },
+  marginItem: {
+    marginBottom: '10px',
+  }
 }));

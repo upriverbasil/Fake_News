@@ -18,6 +18,12 @@ export default makeStyles((theme) => ({
     flexDirection: 'row',
     padding: '10px 50px',
   },
+  searchField: {
+    marginLeft: 'auto',
+  },
+  searchButton: {
+    marginLeft: '5px',
+  },
   heading: {
     color: 'rgba(0,183,255, 1)',
     textDecoration: 'none',

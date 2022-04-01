@@ -23,6 +23,7 @@ const FakeNewsItem = ({ news }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem('profile'))
+
   const Likes = () => {
     if (news.upvotes.length > 0) {
       return news.upvotes.find((like) => like === (user?.result?.googleId || user?.result?._id))
@@ -35,6 +36,7 @@ const FakeNewsItem = ({ news }) => {
 
     return <><ThumbUpAltOutlined fontSize="small" />&nbsp;Like</>;
   };
+
   const DisLikes = () => {
     if (news.downvotes.length > 0) {
       return news.downvotes.find((like) => like === (user?.result?.googleId || user?.result?._id))
@@ -47,22 +49,33 @@ const FakeNewsItem = ({ news }) => {
 
     return <><ThumbDownAltOutlined fontSize="small" />&nbsp;DisLike</>;
   };
+
+  function toTitleCase(str) {
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
+
   return (
     <Card className={classes.card} raised elevation={6}>
       <CardActionArea href={news.articleLink} target="_blank">
         <CardMedia
           className={classes.media}
           image={
-            news.imageLinks == null
+            news.topImage != null ? (news.topImage.startsWith("https://") ? news.topImage : "https://" + news.topImage ) : 
+            (news.imageLinks == null
               ? "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
               : ( news.imageLinks[0].startsWith("https://") ? news.imageLinks[0] : "https://" + news.imageLinks[0] ) ||
-                "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png"
+                "https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png")
           }
           title={news.title}
         />
       </CardActionArea>
       <div className={classes.overlay}>
-        <Typography variant="h6">{news.authorName}</Typography>
+        <Typography variant="h6">{toTitleCase(news.websiteName)}</Typography>
         <Typography variant="body2">
           {moment(news.publishDate, "DD-MM-YYYY HH:mm:ss").fromNow()}
         </Typography>

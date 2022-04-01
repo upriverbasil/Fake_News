@@ -23,6 +23,7 @@ const Paginate = ({ page }) => {
       page={Number(page) || 1}
       variant="outlined"
       color="primary"
+      siblingCount={3}
       renderItem={(item) => (
         <PaginationItem {...item} component={Link} to={`/fake-news?page=${item.page}`} />
       )}

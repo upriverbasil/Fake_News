@@ -34,7 +34,7 @@ export const getFakeNewsBySearch = async(req, res) => {
 
 export const trending = async(req, res) => {
   try {
-    const news = await fakeNews.find().sort({"upvotes":-1}).limit(1)
+    const news = await fakeNews.find().sort({"upvotes":-1}).limit(5)
     console.log(news)
     res.json({ data: news });
 

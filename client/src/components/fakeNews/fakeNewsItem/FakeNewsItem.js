@@ -17,7 +17,7 @@ import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbDownAltOutlined from "@material-ui/icons/ThumbDownAltOutlined";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
-import { likeNews, dislikeNews } from "../../../actions/fakeNews";
+import { likeNews, dislikeNews,getFakeNewsItem } from "../../../actions/fakeNews";
 import useStyles from "./styles";
 import { useNavigate } from "react-router-dom";
 
@@ -90,6 +90,8 @@ const FakeNewsItem = ({ news }) => {
   };
 
   const openFakeNews = () => {
+    // console.log(news._id,"oooooooooo")
+    
     navigate(`/fake-news/${news._id}`);
   }
 

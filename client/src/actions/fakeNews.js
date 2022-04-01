@@ -2,8 +2,9 @@ import * as api from '../api'
 
 export const getFakeNewsItem = (id) => async(dispatch) => {
   try {
+    // console.log(id,"now api turn")
       const {data} = await api.fetchNewsItem(id);
-
+      // console.log(data,"api output")
       dispatch({type: 'FETCH_NEWS', payload: data})
   } catch (error) {
       console.log(error.message)

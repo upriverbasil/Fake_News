@@ -90,8 +90,6 @@ const FakeNewsItem = ({ news }) => {
   };
 
   const openFakeNews = () => {
-    // console.log(news._id,"oooooooooo")
-    
     navigate(`/fake-news/${news._id}`);
   }
 

@@ -11,21 +11,23 @@ import {
 } from "@material-ui/core";
 import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import moment from "moment";
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbDownAltOutlined from "@material-ui/icons/ThumbDownAltOutlined";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
-import { likeNews, dislikeNews,getFakeNewsItem } from "../../../actions/fakeNews";
+import DeleteIcon from '@material-ui/icons/Delete';
+import { likeNews, dislikeNews,getFakeNewsItem, deleteNews} from "../../../actions/fakeNews";
 import useStyles from "./styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation} from "react-router-dom";
 
 const FakeNewsItem = ({ news }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("profile"));
+  const location = useLocation();
 
   const Likes = () => {
     if (news.upvotes.length > 0) {
@@ -159,7 +161,9 @@ const FakeNewsItem = ({ news }) => {
           onClick={() => dispatch(dislikeNews(news._id))}
         >
           <DisLikes />
+          
         </Button>
+        <Button size="small" color="primary" onClick={()=>{dispatch(deleteNews(news._id)); window.location.reload()}}><DeleteIcon fontSize="small" /> Delete</Button>
       </CardActions>
     </Card>
   );

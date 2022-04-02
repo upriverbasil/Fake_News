@@ -175,8 +175,10 @@ const FakeNewsDetails = () => {
               <strong>Comments - coming soon!</strong>
             </Typography>
           </Grid>
-
-          <Grid>
+          <Grid item>
+            <Typography variant="h4">You might also like</Typography>
+          </Grid>
+          <Grid item>
             <Divider style={{ margin: "0px 0 10px 0" }} />
             {recommendedPosts ? (
               recommendedPosts.map(({ title, _id }) => (
@@ -196,16 +198,7 @@ const FakeNewsDetails = () => {
               <div></div>
             )}
           </Grid>
-          <Button
-            size="small"
-            color="primary"
-            onClick={() => {
-              dispatch(deleteNews(fakenewsitem._id));
-              navigate("/");
-            }}
-          >
-            <DeleteIcon fontSize="small" /> Delete
-          </Button>
+          
         </Grid>
       </div>
     </Paper>

@@ -1,4 +1,4 @@
-import React from "react";
+import {React} from "react";
 import {
   Card,
   CardActions,
@@ -28,7 +28,8 @@ const FakeNewsItem = ({ news }) => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("profile"));
   const location = useLocation();
-
+  const [webname,setWebName] = useState("")
+  
   const Likes = () => {
     if (news.upvotes.length > 0) {
       return news.upvotes.find(

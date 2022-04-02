@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import {
   Card,
   CardActions,
@@ -28,7 +28,27 @@ const FakeNewsItem = ({ news }) => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("profile"));
   const location = useLocation();
-
+  const [webname,setWebName] = useState("")
+  useEffect(()=>{
+    if(news){
+      const allowed_webnames = ["India Today", "Fact Crescendo", "Alt News", "BOOM","WebQoof","Vishvas News","Factly","NewsMobile","Newschecker","Digit Eye"]
+      let website = news.websiteName
+      console.log(website.split(" ").join(""))
+      for(let i = 0; i<allowed_webnames.length;i++){
+        if(website.split(" ").join("").toLowerCase().includes(allowed_webnames[i].split(" ").join("").toLowerCase())){
+          setWebName(allowed_webnames[i])
+          break
+        }
+        if(website.split("_").join("").toLowerCase().includes(allowed_webnames[i].split(" ").join("").toLowerCase())){
+          setWebName(allowed_webnames[i])
+          break
+        }
+      }
+      // console.log(website)
+    }
+    
+    
+  },[news])
   const Likes = () => {
     if (news.upvotes.length > 0) {
       return news.upvotes.find(
@@ -121,7 +141,7 @@ const FakeNewsItem = ({ news }) => {
           title={news.title}
         />
         <div className={classes.overlay}>
-          <Typography variant="h6">{toTitleCase(news.websiteName)}</Typography>
+          <Typography variant="h6">{webname}</Typography>
           <Typography variant="body2">
             {moment(news.publishDate, "DD-MM-YYYY HH:mm:ss").fromNow()}
           </Typography>

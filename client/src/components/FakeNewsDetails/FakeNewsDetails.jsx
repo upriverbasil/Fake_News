@@ -96,6 +96,12 @@ const FakeNewsDetails = () => {
               ) : (
                 <></>
               )}
+              <Typography variant="body1">
+                {moment(
+                  fakenewsitem.publishDate,
+                  "DD-MM-YYYY HH:mm:ss"
+                ).fromNow()}
+              </Typography>
               <Typography
                 gutterBottom
                 variant="h6"
@@ -110,29 +116,44 @@ const FakeNewsDetails = () => {
                   <></>
                 )}
               </Typography>
-              <Typography variant="body1">
-                {moment(
-                  fakenewsitem.publishDate,
-                  "DD-MM-YYYY HH:mm:ss"
-                ).fromNow()}
-                <Typography gutterBottom variant="body1" component="p">
-                  {fakenewsitem?.summary
-                    ? fakenewsitem?.summary
-                    : fakenewsitem?.content}
-                </Typography>
+              
+              <Typography gutterBottom variant="body1" component="p">
+                {fakenewsitem?.summary
+                  ? fakenewsitem?.summary
+                  : fakenewsitem?.content}
               </Typography>
 
               <Typography variant="h6">
-                Read more on{" "}
-                <a href={fakenewsitem?.articleLink} target="_blank">
-                  {fakenewsitem?.websiteName.split("_").join(" ")}
-                </a>
-                .
+                <strong>
+                  Read more on{" "}
+                  <a href={fakenewsitem?.articleLink} target="_blank">
+                    {fakenewsitem?.websiteName.split("_").join(" ")}
+                  </a>
+                  .
+                </strong>
               </Typography>
+            </div>
+          </Grid>
 
+          <Grid item xs={12} sm={6} md={4}>
+            <div className={classes.imageSection}>
+              {newsImage != "" ? (
+                <img
+                  className={classes.media}
+                  src={newsImage}
+                  alt={fakenewsitem?.title}
+                />
+              ) : (
+                <></>
+              )}
+            </div>
+          </Grid>
+
+          <Grid item xs={12} sm={12} md={12}>
+            <div className={classes.imageSection}>
               <Divider style={{ margin: "10px 0 20px 0" }} />
               <Typography variant="h5">
-                Share this fake news with friends!
+                <strong>Share this fake news with friends!</strong>
               </Typography>
               <FacebookShareButton
                 url={window.location.href}
@@ -155,50 +176,44 @@ const FakeNewsDetails = () => {
             </div>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
-            <div className={classes.imageSection}>
-              {newsImage != "" ? (
-                <img
-                  className={classes.media}
-                  src={newsImage}
-                  alt={fakenewsitem?.title}
-                />
-              ) : (
-                <></>
-              )}
+          <Grid item xs={12} sm={12} md={12}>
+            <div className={classes.section}>
+              <Divider style={{ margin: "0px 0 10px 0" }} />
+              <Typography variant="h5">
+                <strong>Comments</strong>
+              </Typography>
             </div>
           </Grid>
 
           <Grid item xs={12} sm={12} md={12}>
-            <Divider style={{ margin: "0px 0 10px 0" }} />
-            <Typography variant="body1">
-              <strong>Comments - coming soon!</strong>
-            </Typography>
+            <div className={classes.section}>
+              <Divider style={{ margin: "0px 0 10px 0" }} />
+              <Typography variant="h5">
+                <strong>You might also like</strong>
+              </Typography>
+            </div>
           </Grid>
-          <Grid item>
-            <Typography variant="h4">You might also like</Typography>
+          <Grid item xs={12} sm={12} md={12}>
+            <div className={classes.section}>
+              {recommendedPosts ? (
+                recommendedPosts.map(({ title, _id }) => (
+                  <div
+                    style={{ margin: "20px", cursor: "pointer" }}
+                    onClick={() => {
+                      openNews(_id);
+                    }}
+                    key={_id}
+                  >
+                    <Typography gutterBottom variant="h6">
+                      {title}
+                    </Typography>
+                  </div>
+                ))
+              ) : (
+                <div></div>
+              )}
+            </div>
           </Grid>
-          <Grid item>
-            <Divider style={{ margin: "0px 0 10px 0" }} />
-            {recommendedPosts ? (
-              recommendedPosts.map(({ title, _id }) => (
-                <div
-                  style={{ margin: "20px", cursor: "pointer" }}
-                  onClick={() => {
-                    openNews(_id);
-                  }}
-                  key={_id}
-                >
-                  <Typography gutterBottom variant="h6">
-                    {title}
-                  </Typography>
-                </div>
-              ))
-            ) : (
-              <div></div>
-            )}
-          </Grid>
-          
         </Grid>
       </div>
     </Paper>

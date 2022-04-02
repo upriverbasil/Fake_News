@@ -103,3 +103,11 @@ export const dislikeNews = async(req, res) => {
     
     res.status(200).json(updatedNews);
 }
+
+export const deleteNews = async(req, res) => {
+  const {id} = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No fake news with id: ${id}`);
+  await fakeNews.findByIdAndRemove(id);
+
+  res.json({ message: "Post deleted successfully." });
+}

@@ -13,6 +13,8 @@ export default (state=[], action) => {
             return {...state, fakenewsitem: action.payload};
         case 'TRENDING':
             return {...state, trending:action.payload};
+        case 'DELETE':
+            return {...state, fakenews:state.fakenews.filter((news)=> news._id!=action.payload)}
         case 'LIKE':
         case 'DISLIKE':
             return { ...state, fakenews: state.fakenews.map((newsItem) => (newsItem._id === action.payload._id ? action.payload : newsItem)) };

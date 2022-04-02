@@ -23,8 +23,9 @@ export const getFakeNews = (page) => async(dispatch) => {
 
 export const getFakeNewsBySearch = (searchQuery) => async(dispatch) => {
   try {
+    
     const { data: { data } } = await api.fetchNewsBySearch(searchQuery);
-
+    
     dispatch({type:'FETCH_BY_SEARCH', payload:data})
   } catch (error) {
       console.log(error.message)
@@ -69,3 +70,15 @@ export const deleteNews = (id) => async (dispatch) => {
     console.log(error.message);
   }
 };
+
+export const getRecommended= (searchQuery) => async(dispatch) => {
+  try {
+    console.log(searchQuery,"iiiii")
+    const { data: { data } } = await api.recommendedPosts(searchQuery);
+    // console.log("oooo",data)
+    dispatch({type:'RECOMMENDED', payload:data})
+
+  } catch (error) {
+      console.log(error.message)
+  }
+}

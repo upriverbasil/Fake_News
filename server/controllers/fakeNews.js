@@ -34,12 +34,12 @@ export const getFakeNewsItem = async(req, res) => {
 }
 
 export const getFakeNewsBySearch = async(req, res) => {
-  const { searchQuery } = req.query
+  const { searchQuery,tags} = req.query
 
   try {
     const title = new RegExp(searchQuery, 'i');
 
-    const news = await fakeNews.find({ title }).sort({_id: -1});
+    const news = await fakeNews.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]}).sort({_id: -1});
 
     res.json({ data: news });
   } catch (error) {
@@ -110,4 +110,19 @@ export const deleteNews = async(req, res) => {
   await fakeNews.findByIdAndRemove(id);
 
   res.json({ message: "Post deleted successfully." });
+}
+
+
+export const recommendedPosts = async(req, res) => {
+  const { searchQuery,tags} = req.query
+
+  try {
+    const title = new RegExp(searchQuery, 'i');
+
+    const news = await fakeNews.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]}).sort({_id: -1}).limit(6);
+
+    res.json({ data: news });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 }

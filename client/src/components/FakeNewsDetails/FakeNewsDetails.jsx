@@ -4,15 +4,16 @@ import {
   Typography,
   CircularProgress,
   Divider,
-  Grid,
+  Grid,Button
 } from "@material-ui/core/";
+import DeleteIcon from '@material-ui/icons/Delete';
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { getFakeNewsItem } from "../../actions/fakeNews";
 import useStyles from "./styles";
-
+import { deleteNews } from "../../actions/fakeNews";
 const FakeNewsDetails = () => {
   const fakenewsitem = useSelector((state) => {
     return state?.fakeNews;
@@ -112,7 +113,10 @@ const FakeNewsDetails = () => {
               <strong>Comments - coming soon!</strong>
             </Typography>
           </Grid>
+
+          <Button size="small" color="primary" onClick={()=>{dispatch(deleteNews(fakenewsitem._id)); navigate('/')}}><DeleteIcon fontSize="small" /> Delete</Button>
         </Grid>
+        
       </div>
     </Paper>
   );

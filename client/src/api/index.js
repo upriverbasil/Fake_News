@@ -18,3 +18,4 @@ export const dislikeNews = (id) => API.patch(`/fake-news/${id}/dislikeNews`)
 export const trending = () => API.get('/fake-news/trending')
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
+export const deleteNews = (id) => API.delete(`fake-news/${id}`);

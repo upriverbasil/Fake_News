@@ -60,3 +60,12 @@ export const dislikeNews = (id) => async (dispatch) => {
   }
 };
 
+export const deleteNews = (id) => async (dispatch) => {
+  try {
+    await api.deleteNews(id);
+
+    dispatch({ type: 'DELETE', payload: id });
+  } catch (error) {
+    console.log(error.message);
+  }
+};

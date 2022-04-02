@@ -11,13 +11,16 @@ import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { useParams, useNavigate } from "react-router-dom";
 
-import { getFakeNewsItem } from "../../actions/fakeNews";
+import { getFakeNewsItem, getRecommended} from "../../actions/fakeNews";
 import useStyles from "./styles";
 import { deleteNews } from "../../actions/fakeNews";
 const FakeNewsDetails = () => {
   const fakenewsitem = useSelector((state) => {
     return state?.fakeNews;
   })?.fakenewsitem;
+  const recommended = useSelector((state) => {
+    {return state?.fakeNews};
+  })?.recommendednews;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const classes = useStyles();
@@ -34,11 +37,21 @@ const FakeNewsDetails = () => {
       newsImage = fakenewsitem.imageLinks[0];
     else newsImage = "https://" + fakenewsitem.imageLinks[0];
   }
-  
+  const recommendedPosts = recommended?recommended.filter(({ _id }) => _id !== fakenewsitem._id):null;
   useEffect(() => {
     dispatch(getFakeNewsItem(id));
   }, [id]);
+  useEffect(() => {
+    if (fakenewsitem) {
+      console.log("pppp",fakenewsitem?.tags)
+      dispatch(getRecommended({ search: 'none', tags: fakenewsitem?.tags?.join(',') }));
+    }
+  }, [fakenewsitem]);
+  // useEffect(()=>{console.log(fakenewsitem?.tags.join(' '));console.log(recommendedPosts,"pppppppp")},[recommendedPosts])
 
+  const openNews = (_id) => {
+    navigate(`/fake-news/${_id}`);
+  }
   return !fakenewsitem ? (
     <div></div>
   ) : (
@@ -113,7 +126,14 @@ const FakeNewsDetails = () => {
               <strong>Comments - coming soon!</strong>
             </Typography>
           </Grid>
-
+          <Grid item>
+          
+            {recommendedPosts?recommendedPosts.map(({ title,_id}) => (
+              <div style={{ margin: '20px', cursor: 'pointer' }} onClick={() => {openNews(_id)}} key={_id}>
+                <Typography gutterBottom variant="h6">{title}</Typography>
+              </div>
+            )):<div></div>}
+          </Grid>
           <Button size="small" color="primary" onClick={()=>{dispatch(deleteNews(fakenewsitem._id)); navigate('/')}}><DeleteIcon fontSize="small" /> Delete</Button>
         </Grid>
         

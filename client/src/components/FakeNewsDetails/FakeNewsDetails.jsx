@@ -23,7 +23,7 @@ import {
 import { getFakeNewsItem, getRecommended } from "../../actions/fakeNews";
 import useStyles from "./styles";
 import { deleteNews } from "../../actions/fakeNews";
-
+import FakeNews from "../fakeNews/fakeNewsItem/FakeNewsItem.js";
 const FakeNewsDetails = () => {
   const fakenewsitem = useSelector((state) => {
     return state?.fakeNews;
@@ -194,25 +194,22 @@ const FakeNewsDetails = () => {
             </div>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
-            <div className={classes.section}>
+          <Grid
+              className={classes.container}
+              container
+              alignItems="stretch"
+              spacing={3}
+            >
               {recommendedPosts ? (
-                recommendedPosts.map(({ title, _id }) => (
-                  <div
-                    style={{ margin: "20px", cursor: "pointer" }}
-                    onClick={() => {
-                      openNews(_id);
-                    }}
-                    key={_id}
-                  >
-                    <Typography gutterBottom variant="h6">
-                      {title}
-                    </Typography>
-                  </div>
+                recommendedPosts.map((news) => (
+                  <Grid key={news._id} item xs={12} sm={12} md={6} lg={3}>
+                    <FakeNews news={news} />
+                  </Grid>
                 ))
               ) : (
                 <div></div>
               )}
-            </div>
+            </Grid>
           </Grid>
         </Grid>
       </div>

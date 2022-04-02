@@ -134,7 +134,7 @@ const FakeNewsDetails = () => {
               </div>
             )):<div></div>}
           </Grid>
-          <Button size="small" color="primary" onClick={()=>{dispatch(deleteNews(fakenewsitem._id)); navigate('/')}}><DeleteIcon fontSize="small" /> Delete</Button>
+         
         </Grid>
         
       </div>

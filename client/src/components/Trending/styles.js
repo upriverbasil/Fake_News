@@ -14,8 +14,17 @@ export default makeStyles((theme) => ({
   },
   link: {
     textDecoration: 'none',
+    flexDirection:'row'
   },
   marginItem: {
     marginBottom: '10px',
+    flexDirection:'row',
+    
+  },
+  trendingitem:{
+    flexDirection:'row'
+  },
+  item:{
+    flex:1
   }
 }));

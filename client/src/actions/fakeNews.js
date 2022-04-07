@@ -23,7 +23,7 @@ export const getFakeNews = (page) => async(dispatch) => {
 
 export const getFakeNewsBySearch = (searchQuery) => async(dispatch) => {
   try {
-    
+    // console.log(searchQuery)
     const { data: { data } } = await api.fetchNewsBySearch(searchQuery);
     
     dispatch({type:'FETCH_BY_SEARCH', payload:data})

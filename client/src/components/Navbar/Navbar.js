@@ -41,7 +41,9 @@ const Navbar = (props) => {
   };
 
   const searchPost = (e) => {
+    
     if (search.trim()) {
+      console.log(search)
       dispatch(getFakeNewsBySearch({ search }));
       navigate(`/fake-news/search?searchQuery=${search || "none"}`);
     } else {

@@ -37,10 +37,11 @@ export const getFakeNewsBySearch = async(req, res) => {
   const { searchQuery,tags} = req.query
 
   try {
+    // console.log(searchQuery,tags,req.query)
     const title = new RegExp(searchQuery, 'i');
 
     const news = await fakeNews.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]}).sort({_id: -1});
-
+    // console.log(news)
     res.json({ data: news });
   } catch (error) {
     res.status(404).json({ message: error.message });

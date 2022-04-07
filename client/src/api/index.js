@@ -12,7 +12,7 @@ API.interceptors.request.use((req) => {
 
 export const fetchNewsItem = (id) => API.get(`/fake-news/${id}`);
 export const fetchNews = (page) => API.get(`/fake-news?page=${page}`);
-export const fetchNewsBySearch = (searchQuery) => API.get(`/fake-news/search?searchQuery=searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
+export const fetchNewsBySearch = (searchQuery) => API.get(`/fake-news/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
 export const likeNews = (id) => API.patch(`/fake-news/${id}/likeNews`)
 export const dislikeNews = (id) => API.patch(`/fake-news/${id}/dislikeNews`)
 export const trending = () => API.get('/fake-news/trending')

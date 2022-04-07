@@ -3,16 +3,15 @@ import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {GoogleLogin} from 'react-google-login'
 import { useDispatch } from 'react-redux';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useLocation} from 'react-router-dom'
 import Input from './Input';
 import useStyles from './styles';
 import Icon from './icon';
 import {signup,signin} from "../../actions/auth"
-
+import { adminstatus } from '../../api';
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 const SignUp = () => {
- 
   const [form, setForm] = useState(initialState);
   const [isSignup, setIsSignup] = useState(false);
   const [formData,setFormData] = useState(initialState);
@@ -49,9 +48,14 @@ const SignUp = () => {
   const googleSuccess = async(res) => {
     const result = res?.profileObj;
     const token = res?.tokenId;
+    // console.log(result?.email)
+    let isAdmin = await adminstatus(result.email)
+    isAdmin = isAdmin?.data?.adminStatus
+    // console.log(isAdmin)
     try{
-      dispatch({type:'AUTH',data:{result,token}})
+      dispatch({type:'AUTH',data:{result,token,adminStatus:isAdmin}})
       navigate("/")
+      window.location.reload();
     }
     catch(error){
       console.log(error)

@@ -33,7 +33,7 @@ const FakeNewsItem = ({ news }) => {
     if(news){
       const allowed_webnames = ["India Today", "Fact Crescendo", "Alt News", "BOOM","WebQoof","Vishvas News","Factly","NewsMobile","Newschecker","Digit Eye"]
       let website = news.websiteName
-      console.log(website.split(" ").join(""))
+      // console.log(website.split(" ").join(""))
       for(let i = 0; i<allowed_webnames.length;i++){
         if(website.split(" ").join("").toLowerCase().includes(allowed_webnames[i].split(" ").join("").toLowerCase())){
           setWebName(allowed_webnames[i])
@@ -183,7 +183,10 @@ const FakeNewsItem = ({ news }) => {
           <DisLikes />
           
         </Button>
+        { user?.adminStatus ?
         <Button size="small" color="primary" onClick={()=>{dispatch(deleteNews(news._id)); window.location.reload()}}><DeleteIcon fontSize="small" /> Delete</Button>
+          : null
+        }
       </CardActions>
     </Card>
   );

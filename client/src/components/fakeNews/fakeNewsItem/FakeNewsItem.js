@@ -21,7 +21,16 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { likeNews, dislikeNews,getFakeNewsItem, deleteNews} from "../../../actions/fakeNews";
 import useStyles from "./styles";
 import { useNavigate, useLocation} from "react-router-dom";
-
+import Boom from "../../../images/Boom.png"
+import IndiaToday from "../../../images/IndiaToday.png"
+import FactCrescendo from "../../../images/FactCrescendo.png"
+import AltNews from "../../../images/AltNews.png"
+import WebQoof from "../../../images/WebQoof.png"
+import VishvasNews from "../../../images/VishvasNews.png"
+import Factly from "../../../images/Factly.png"
+import NewsMobile from "../../../images/NewsMobile.png"
+import NewsChecker from "../../../images/NewsChecker.png"
+import DigitEye from "../../../images/DigitEye.jpeg"
 const FakeNewsItem = ({ news }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -29,18 +38,24 @@ const FakeNewsItem = ({ news }) => {
   const user = JSON.parse(localStorage.getItem("profile"));
   const location = useLocation();
   const [webname,setWebName] = useState("")
+  const [image,setImage] = useState(null);
   useEffect(()=>{
     if(news){
       const allowed_webnames = ["India Today", "Fact Crescendo", "Alt News", "BOOM","WebQoof","Vishvas News","Factly","NewsMobile","Newschecker","Digit Eye"]
+      const imagenames = [IndiaToday, FactCrescendo, AltNews, Boom,WebQoof,VishvasNews,Factly,NewsMobile,NewsChecker,DigitEye]
       let website = news.websiteName
       // console.log(website.split(" ").join(""))
+      const location = "../../../images/"
       for(let i = 0; i<allowed_webnames.length;i++){
         if(website.split(" ").join("").toLowerCase().includes(allowed_webnames[i].split(" ").join("").toLowerCase())){
           setWebName(allowed_webnames[i])
+          setImage(imagenames[i])
+          // console.log(image)
           break
         }
         if(website.split("_").join("").toLowerCase().includes(allowed_webnames[i].split(" ").join("").toLowerCase())){
           setWebName(allowed_webnames[i])
+          setImage(imagenames[i])
           break
         }
       }
@@ -141,7 +156,8 @@ const FakeNewsItem = ({ news }) => {
           title={news.title}
         />
         <div className={classes.overlay}>
-          <Typography variant="h6">{webname}</Typography>
+          {image?<img height="40px" width="40px" src={image}></img> : null}
+          {/* <Typography variant="h6">{webname}</Typography> */}
           <Typography variant="body2">
             {moment(news.publishDate, "DD-MM-YYYY HH:mm:ss").fromNow()}
           </Typography>

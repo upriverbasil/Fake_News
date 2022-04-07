@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { AppBar, Typography, CircularProgress, Grid } from "@material-ui/core";
+import { AppBar, Typography, CircularProgress, Grid, Image} from "@material-ui/core";
 import useStyles from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import FakeNews from "../fakeNews/FakeNews";
@@ -20,8 +20,19 @@ const Trending = () => {
       ) : (
           <ol>
           {trending.map((news) => (
-            <Grid key={news._id} item>
-              <li className={classes.marginItem}><a href={news.articleLink} className={classes.link}><Typography display="block">{news.title}</Typography></a></li>
+            <Grid key={news._id} item direction="row">
+              <div className={classes.trendingitem}>
+                <li className={classes.marginItem}>
+                  <a href={news.articleLink} className={classes.link}>
+                      <div className={classes.item}>
+                        <img height="50px" width="50px" src={news?.topImage ? news?.topImage : (news?.imageLinks[0]?news?.imageLinks[0]:"https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png")}></img>
+                      </div>
+                      <div className={classes.item}>
+                      <Typography display="block">{news.title}</Typography>
+                      </div>
+                    </a>
+                </li>
+              </div>
             </Grid>
           ))}
           </ol>

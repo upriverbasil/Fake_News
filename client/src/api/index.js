@@ -9,7 +9,7 @@ API.interceptors.request.use((req) => {
   
     return req;
   });
-
+export const adminstatus = (email) => {console.log(email);return(API.get(`/user/adminStatus?email=${email}`));};
 export const fetchNewsItem = (id) => API.get(`/fake-news/${id}`);
 export const fetchNews = (page) => API.get(`/fake-news?page=${page}`);
 export const fetchNewsBySearch = (searchQuery) => API.get(`/fake-news/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
@@ -20,3 +20,4 @@ export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
 export const deleteNews = (id) => API.delete(`fake-news/${id}`);
 export const recommendedPosts = (searchQuery) => API.get(`/fake-news/recommendedPosts?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
+export const addnewadmin = (email) => API.post('/user/new-admin',email);

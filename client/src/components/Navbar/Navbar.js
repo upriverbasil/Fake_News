@@ -71,6 +71,17 @@ const Navbar = (props) => {
           />
         </Link>
         <Toolbar className={classes.Toolbar}>
+          {user?.adminStatus ?  <Button
+              component={Link}
+              to="/new-admin"
+              variant="contained"
+              color="primary"
+            >
+              Make New Admin
+            </Button> : null
+            }
+        </Toolbar>
+        <Toolbar className={classes.Toolbar}>
           {user ? (
             <div className={classes.profile}>
               <Avatar

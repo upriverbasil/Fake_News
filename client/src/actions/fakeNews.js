@@ -35,6 +35,7 @@ export const getFakeNewsBySearch = (searchQuery) => async(dispatch) => {
 export const trending = () => async(dispatch) => {
   try {
     const {data} = await api.trending();
+
     dispatch({type:'TRENDING',payload:data})
   } catch (error) {
     console.log(error.message)

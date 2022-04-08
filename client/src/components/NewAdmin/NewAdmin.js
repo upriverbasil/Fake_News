@@ -12,7 +12,16 @@ const NewAdmin = () => {
     const [textValue, setTextValue] = useState("");
     const navigate = useNavigate();
     const onTextChange = (e) => {return(setTextValue(e.target.value))};
+    function validateEmail(email) 
+    {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
     const handleSubmit = async() => {
+        if(textValue==="" || !validateEmail(textValue)){
+          alert("Please enter valid Email ID")
+          return;
+        }
             await addnewadmin({email:textValue})
             navigate("/")
             console.log(textValue)

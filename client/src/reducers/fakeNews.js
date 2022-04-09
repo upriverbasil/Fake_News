@@ -20,6 +20,9 @@ export default (state=[], action) => {
         case 'LIKE':
         case 'DISLIKE':
             return { ...state, fakenews: state.fakenews.map((newsItem) => (newsItem._id === action.payload._id ? action.payload : newsItem)) };
+        case 'SEARCH':
+            // console.log(action)
+            return {...state,searchQuery:action?.data}
         default:
             return state;
     }

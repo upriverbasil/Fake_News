@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { useNavigate, useLocation, Navigate } from "react-router-dom";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import FakeNews from "../fakeNews/FakeNews";
 import Pagination from "../Pagination/Pagination";
@@ -28,7 +28,7 @@ const Home = () => {
   const classes = useStyles();
   const query = useQuery();
   const page = query.get("page") || 1;
-
+  const searchQuery = useSelector((state)=>{return(state?.fakeNews?.searchQuery)})
   useEffect(() => {
     dispatch(trending());
     dispatch(getFakeNews());
@@ -46,7 +46,7 @@ const Home = () => {
         >
           <Grid item xs={12} sm={6} md={9}>
             <FakeNews />
-            {console.log(useLocation().pathname)}
+            {/* {console.log(useLocation().pathname)} */}
             {useLocation().pathname == "/fake-news" ? (
               <Paper className={classes.pagination} elevation={6}>
                 <Pagination page={page} variant="outlined" shape="rounded" />

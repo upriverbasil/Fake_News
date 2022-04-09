@@ -32,7 +32,7 @@ const App = () => {
           <Route path="/fake-news" element={<Home />} />
           <Route path="/fake-news/search" element={<Home />} />
           
-            <Route path="/fake-news/:id" element={<FakeNewsDetails />} forceRefresh={true} />
+          <Route path="/fake-news/:id" element={<FakeNewsDetails />} forceRefresh={true} />
          
          
           <Route path="/auth" element={!user ? <Auth /> : <Navigate to="/fake-news" />} />

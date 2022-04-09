@@ -41,7 +41,6 @@ const Navbar = (props) => {
   };
 
   const searchPost = (e) => {
-    
     if (search.trim()) {
       console.log(search)
       dispatch(getFakeNewsBySearch({ search }));
@@ -51,8 +50,18 @@ const Navbar = (props) => {
     }
   };
 
+  const categorySearch = (e) => {
+    const search = e.currentTarget.value;
+    
+    if (search.trim()) {
+      dispatch(getFakeNewsBySearch({ search }));
+      navigate(`/fake-news/search?searchQuery=${ search || "none" }`);
+    } else {
+      navigate("/");
+    }
+  };
+
   const handleKeyPress = (e) => {
-    console.log(e.key)
     if (e.key === 'Enter') {
       searchPost();
     }
@@ -116,16 +125,16 @@ const Navbar = (props) => {
         </Toolbar>
       </AppBar>
       <AppBar className={classes.appBar2} position="static" color="inherit">
-        <Button onClick={searchPost} value="Politics">
+        <Button onClick={categorySearch} value="Politics">
           <b>Politics</b>
         </Button>
-        <Button onClick={searchPost} value="Sports">
+        <Button onClick={categorySearch} value="Sports">
           <b>Sports</b>
         </Button>
-        <Button onClick={searchPost} value="Business">
+        <Button onClick={categorySearch} value="Business">
           <b>Business</b>
         </Button>
-        <Button onClick={searchPost} value="Health">
+        <Button onClick={categorySearch} value="Health">
           <b>Health</b>
         </Button>
 

@@ -3,16 +3,17 @@ import axios from 'axios';
 const API = axios.create({ baseURL: 'http://localhost:8080' });
 
 API.interceptors.request.use((req) => {
-    if (localStorage.getItem('profile')) {
-      req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
-    }
-  
-    return req;
-  });
+  if (localStorage.getItem('profile')) {
+    req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).token}`;
+  }
+
+  return req;
+});
+
 export const adminstatus = (email) => {console.log(email);return(API.get(`/user/adminStatus?email=${email}`));};
 export const fetchNewsItem = (id) => API.get(`/fake-news/${id}`);
 export const fetchNews = (page) => API.get(`/fake-news?page=${page}`);
-export const fetchNewsBySearch = (searchQuery) => API.get(`/fake-news/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags}`);
+export const fetchNewsBySearch = (searchQuery, page) => API.get(`/fake-news/search?searchQuery=${searchQuery || 'none'}&page=${page}`);
 export const likeNews = (id) => API.patch(`/fake-news/${id}/likeNews`)
 export const dislikeNews = (id) => API.patch(`/fake-news/${id}/dislikeNews`)
 export const trending = () => API.get('/fake-news/trending')

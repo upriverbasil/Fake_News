@@ -3,17 +3,17 @@ import { Pagination, PaginationItem } from "@material-ui/lab";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getFakeNews } from "../../actions/fakeNews";
+import { getFakeNewsBySearch } from "../../actions/fakeNews";
 
 import useStyles from "./styles";
 
-const Paginate = ({ page }) => {
+const Paginate = ({ searchQuery, page }) => {
   const { numberOfPages } = useSelector((state) => state.fakeNews);
   const classes = useStyles();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (page) dispatch(getFakeNews(page));
+    if (page) dispatch(getFakeNewsBySearch(searchQuery, page));
   }, [page]);
 
   return (
@@ -28,7 +28,7 @@ const Paginate = ({ page }) => {
         <PaginationItem
           {...item}
           component={Link}
-          to={`/fake-news/search?searchQuery=${item.searchQuery}&page=${item.page}`}
+          to={`/fake-news/search?searchQuery=${searchQuery}&page=${item.page}`}
         />
       )}
     />

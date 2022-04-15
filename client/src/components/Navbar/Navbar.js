@@ -42,10 +42,8 @@ const Navbar = (props) => {
 
   const searchPost = (e) => {
     if (search.trim()) {
-      console.log(search)
-      // dispatch(getFakeNewsBySearch({ search }));
-      dispatch({type:'SEARCH',data:search})
-      // navigate(`/fake-news/search?searchQuery=${search || "none"}`);
+      dispatch({type:'SEARCH',data:search});
+      navigate(`/fake-news/search?searchQuery=${search || "none"}&page=1`);
     } else {
       navigate("/");
     }
@@ -55,8 +53,8 @@ const Navbar = (props) => {
     const search = e.currentTarget.value;
     
     if (search.trim()) {
-      dispatch(getFakeNewsBySearch({ search }));
-      navigate(`/fake-news/search?searchQuery=${ search || "none" }`);
+      dispatch({type:'SEARCH',data:search});
+      navigate(`/fake-news/search?searchQuery=${ search || "none" }&page=1`);
     } else {
       navigate("/");
     }

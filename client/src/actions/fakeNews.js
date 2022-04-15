@@ -3,7 +3,7 @@ import * as api from '../api'
 export const getFakeNewsItem = (id) => async(dispatch) => {
   try {
     // console.log(id,"now api turn")
-      const {data} = await api.fetchNewsItem(id);
+      const { data } = await api.fetchNewsItem(id);
       // console.log(data,"api output")
       dispatch({type: 'FETCH_NEWS', payload: data})
   } catch (error) {
@@ -13,21 +13,17 @@ export const getFakeNewsItem = (id) => async(dispatch) => {
 
 export const getFakeNews = (page) => async(dispatch) => {
     try {
-        const {data} = await api.fetchNews(page);
+        const { data } = await api.fetchNews(page);
 
-        dispatch({type: 'FETCH_ALL',payload: data})
+        dispatch({type: 'FETCH_ALL', payload: data})
     } catch (error) {
         console.log(error.message)
     }
 }
 
-export const getFakeNewsBySearch = (searchQuery) => async(dispatch) => {
+export const getFakeNewsBySearch = (searchQuery, page) => async(dispatch) => {
   try {
-    // console.log(searchQuery)
-    const { data: { data } } = await api.fetchNewsBySearch(searchQuery);
-
-    console.log(searchQuery);
-    console.log(data);
+    const { data } = await api.fetchNewsBySearch(searchQuery, page);
     
     dispatch({type:'FETCH_BY_SEARCH', payload:data})
   } catch (error) {

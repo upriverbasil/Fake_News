@@ -34,15 +34,20 @@ export const getFakeNewsItem = async(req, res) => {
 }
 
 export const getFakeNewsBySearch = async(req, res) => {
-  const { searchQuery,tags} = req.query
+  const { searchQuery, page } = req.query
 
   try {
-    // console.log(searchQuery,tags,req.query)
+    const LIMIT = 8;
+    const startIndex = (Number(page) - 1) * LIMIT;    // starting fake news index
+
     const title = new RegExp(searchQuery, 'i');
 
-    const news = await fakeNews.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]}).sort({_id: -1});
-    // console.log(news)
-    res.json({ data: news });
+    const allNews = await fakeNews.find({ title }).sort({_id: -1});
+    const total = allNews.length;
+
+    const news = await fakeNews.find({ title }).sort({_id: -1}).limit(LIMIT).skip(startIndex);
+
+    res.status(200).json({ data: news, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

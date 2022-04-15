@@ -8,7 +8,12 @@ export default (state=[], action) => {
                 numberOfPages: action.payload.numberOfPages,
             };
         case 'FETCH_BY_SEARCH':
-            return {...state, fakenews: action.payload};
+            return {
+                ...state,
+                fakenews: action.payload.data,
+                currentPage: action.payload.currentPage,
+                numberOfPages: action.payload.numberOfPages,
+            };
         case 'FETCH_NEWS':
             return {...state, fakenewsitem: action.payload};
         case 'TRENDING':
@@ -21,8 +26,7 @@ export default (state=[], action) => {
         case 'DISLIKE':
             return { ...state, fakenews: state.fakenews.map((newsItem) => (newsItem._id === action.payload._id ? action.payload : newsItem)) };
         case 'SEARCH':
-            // console.log(action)
-            return {...state,searchQuery:action?.data}
+            return {...state, searchQuery:action?.data}
         default:
             return state;
     }

@@ -28,7 +28,8 @@ const Home = () => {
   const classes = useStyles();
   const query = useQuery();
   const page = query.get("page") || 1;
-  const searchQuery = useSelector((state)=>{return(state?.fakeNews?.searchQuery)})
+  const searchQuery = useSelector((state)=>{return(state?.fakeNews?.searchQuery)});
+
   useEffect(() => {
     dispatch(trending());
     dispatch(getFakeNews());
@@ -46,15 +47,14 @@ const Home = () => {
         >
           <Grid item xs={12} sm={6} md={9}>
             <FakeNews />
-            {/* {console.log(useLocation().pathname)} */}
             {useLocation().pathname == "/fake-news" ? (
               <Paper className={classes.pagination} elevation={6}>
                 <Pagination page={page} variant="outlined" shape="rounded" />
               </Paper>
-            ) : ( <></>
-              // <Paper className={classes.pagination} elevation={6}>
-              //   <SearchPagination page={page} variant="outlined" shape="rounded" />
-              // </Paper>
+            ) : (
+              <Paper className={classes.pagination} elevation={6}>
+                <SearchPagination searchQuery={searchQuery} page={page} variant="outlined" shape="rounded" />
+              </Paper>
             )}
           </Grid>
           <Grid item xs={12} sm={6} md={3}>

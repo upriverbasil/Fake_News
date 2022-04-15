@@ -24,6 +24,15 @@ import { getFakeNewsItem, getRecommended } from "../../actions/fakeNews";
 import useStyles from "./styles";
 import { deleteNews } from "../../actions/fakeNews";
 import FakeNews from "../fakeNews/fakeNewsItem/FakeNewsItem.js";
+import {
+  likeNews,
+  dislikeNews
+} from "../../actions/fakeNews";
+import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import ThumbDownAltOutlined from "@material-ui/icons/ThumbDownAltOutlined";
+import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
+
 const FakeNewsDetails = () => {
   const fakenewsitem = useSelector((state) => {
     return state?.fakeNews;
@@ -40,7 +49,7 @@ const FakeNewsDetails = () => {
   const classes = useStyles();
   const location = useLocation();
   const { id } = useParams();
-
+  const user = JSON.parse(localStorage.getItem("profile"));
   let newsImage = "";
 
   if (fakenewsitem?.topImage) {
@@ -71,7 +80,68 @@ const FakeNewsDetails = () => {
   const openNews = (_id) => {
     navigate(`/fake-news/${_id}`);
   };
+  const Likes = ({news}) => {
+    // console.log(news)
+    if (news.upvotes.length > 0) {
+      return news.upvotes.find(
+        (like) => like === (user?.result?.googleId || user?.result?._id)
+      ) ? (
+        <>
+          <ThumbUpAltIcon fontSize="large" />
+          &nbsp;
+          {news.upvotes.length > 2
+            ? `You and ${news.upvotes.length - 1} others`
+            : `${news.upvotes.length} like${
+                news.upvotes.length > 1 ? "s" : ""
+              }`}
+        </>
+      ) : (
+        <>
+          <ThumbUpAltOutlined fontSize="large" />
+          &nbsp;{news.upvotes.length}{" "}
+          {news.upvotes.length === 1 ? "Like" : "Likes"}
+        </>
+      );
+    }
 
+    return (
+      <>
+        <ThumbUpAltOutlined fontSize="large" />
+        &nbsp;Like
+      </>
+    );
+  };
+  const DisLikes = ({news}) => {
+    console.log(news)
+    if (news.downvotes.length > 0) {
+      return news.downvotes.find(
+        (like) => like === (user?.result?.googleId || user?.result?._id)
+      ) ? (
+        <>
+          <ThumbDownAltIcon fontSize="large" />
+          &nbsp;
+          {news.downvotes.length > 2
+            ? `You and ${news.downvotes.length - 1} others`
+            : `${news.downvotes.length} Dislike${
+                news.downvotes.length > 1 ? "s" : ""
+              }`}
+        </>
+      ) : (
+        <>
+          <ThumbDownAltOutlined fontSize="large" />
+          &nbsp;{news.downvotes.length}{" "}
+          {news.downvotes.length === 1 ? "DisLike" : "DisLikes"}
+        </>
+      );
+    }
+
+    return (
+      <>
+        <ThumbDownAltOutlined fontSize="large" />
+        &nbsp;DisLike
+      </>
+    );
+  };
   return !fakenewsitem ? (
     <div></div>
   ) : (
@@ -136,6 +206,7 @@ const FakeNewsDetails = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
+            
             <div className={classes.imageSection}>
               {newsImage != "" ? (
                 <img
@@ -148,7 +219,40 @@ const FakeNewsDetails = () => {
               )}
             </div>
           </Grid>
-
+          <Grid item xs={12} sm={6} md={4}>
+            
+              <Divider style={{ margin: "10px 0 20px 0" }} />
+              {/* <Typography variant="h5"><strong>LIKE OR DISLIKE</strong></Typography> */}
+              <Button
+                size="large"
+                color="primary"
+                disabled={!user?.result}
+                onClick={() => {dispatch(likeNews(fakenewsitem._id));window.location.reload();}}
+              >
+                <Likes news={fakenewsitem} />
+              </Button>
+              <Button
+                size="large"
+                color="primary"
+                disabled={!user?.result}
+                onClick={() => {dispatch(dislikeNews(fakenewsitem._id));window.location.reload();}}
+              >
+                <DisLikes news={fakenewsitem} />
+              </Button>
+              {user?.adminStatus ? (
+                  <Button
+                    size="large"
+                    color="primary"
+                    onClick={() => {
+                      dispatch(deleteNews(fakenewsitem._id));
+                      window.location.reload();
+                    }}
+                  >
+                    <DeleteIcon fontSize="large"  /> Delete
+                  </Button>
+              ) : null}
+            
+          </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <div className={classes.imageSection}>
               <Divider style={{ margin: "10px 0 20px 0" }} />

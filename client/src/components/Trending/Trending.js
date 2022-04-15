@@ -6,15 +6,17 @@ import {
   Grid,
   Image,
   Divider,
+  ButtonBase,
 } from "@material-ui/core";
 import useStyles from "./styles";
 import { useSelector, useDispatch } from "react-redux";
 import FakeNews from "../fakeNews/FakeNews";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Trending = () => {
   const classes = useStyles();
   const trendingList = useSelector((state) => state.fakeNews)?.trending?.data;
-
+  const navigate = useNavigate();
   useEffect(() => {
     // console.log(trendingList.length, "ooooo");
   }, [trendingList]);
@@ -29,7 +31,7 @@ const Trending = () => {
         trendingList.map((news) => (
           <Grid key={news._id} item direction="row">
             <div className={classes.trendingitem}>
-              <a href={news.articleLink} className={classes.link}>
+              <ButtonBase onClick={()=>{navigate(`/fake-news/${news._id}`)}}  className={classes.link}>
                 <div className={classes.item}>
                   <img
                     style={{ objectFit: "cover" }}
@@ -53,7 +55,7 @@ const Trending = () => {
                     {news.title}
                   </Typography>
                 </div>
-              </a>
+                </ButtonBase>
             </div>
           </Grid>
         ))

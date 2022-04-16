@@ -28,13 +28,17 @@ const Home = () => {
   const classes = useStyles();
   const query = useQuery();
   const page = query.get("page") || 1;
-  const searchQuery = useSelector((state)=>{return(state?.fakeNews?.searchQuery)});
-
+  const [searchQuery,setSearchQuery] = useState()
+  const location = useLocation();
   useEffect(() => {
     dispatch(trending());
     dispatch(getFakeNews());
   }, [dispatch]);
-
+  useEffect(()=>{
+    console.log(location,"oooooooo")
+    setSearchQuery(location.search.slice(13,location.search.indexOf("&")))
+    console.log(location)
+  },[location])
   return (
     <Grow in>
       <Container maxWidth="xl">

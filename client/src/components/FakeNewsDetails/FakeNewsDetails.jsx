@@ -77,6 +77,7 @@ const FakeNewsDetails = () => {
     }
   }, [fakenewsitem]);
 
+ 
   const openNews = (_id) => {
     navigate(`/fake-news/${_id}`);
   };
@@ -161,14 +162,14 @@ const FakeNewsDetails = () => {
               </Typography>
               {fakenewsitem.authorName ? (
                 <Typography variant="h6">
-                  Published by: {fakenewsitem.authorName}
+                  Published by: {fakenewsitem?.authorName}
                 </Typography>
               ) : (
                 <></>
               )}
               <Typography variant="body1">
                 {moment(
-                  fakenewsitem.publishDate,
+                  fakenewsitem?.publishDate,
                   "DD-MM-YYYY HH:mm:ss"
                 ).fromNow()}
               </Typography>
@@ -178,7 +179,7 @@ const FakeNewsDetails = () => {
                 color="textSecondary"
                 component="h2"
               >
-                {fakenewsitem?.tags.map ? (
+                {fakenewsitem?.tags ?(
                   fakenewsitem.tags.map(
                     (tag) => `#${tag.split(" ").join("_")} `
                   )
@@ -267,13 +268,13 @@ const FakeNewsDetails = () => {
               </FacebookShareButton>
               <TwitterShareButton
                 url={window.location.href}
-                title={"Check out this fake news!" + fakenewsitem.title}
+                title={"Check out this fake news!" + fakenewsitem?.title}
               >
                 <TwitterIcon logoFillColor="white" round={true} />
               </TwitterShareButton>
               <WhatsappShareButton
                 url={window.location.href}
-                title={"Check out this fake news!" + fakenewsitem.title}
+                title={"Check out this fake news!" + fakenewsitem?.title}
               >
                 <WhatsappIcon logoFillColor="white" round={true} />
               </WhatsappShareButton>

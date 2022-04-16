@@ -42,7 +42,7 @@ const Navbar = (props) => {
 
   const searchPost = (e) => {
     if (search.trim()) {
-      dispatch({type:'SEARCH',data:search});
+      // dispatch({type:'SEARCH',data:search});
       navigate(`/fake-news/search?searchQuery=${search || "none"}&page=1`);
     } else {
       navigate("/");

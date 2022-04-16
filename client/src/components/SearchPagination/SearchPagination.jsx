@@ -12,9 +12,10 @@ const Paginate = ({ searchQuery, page }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
+
   useEffect(() => {
     console.log(searchQuery,"ooooo",page)
-    if (page){dispatch(getFakeNewsBySearch(searchQuery, page));
+    if (searchQuery && page){dispatch(getFakeNewsBySearch(searchQuery, page));
     }
   }, [page,searchQuery]);
 

@@ -35,6 +35,9 @@ const Home = () => {
     dispatch(getFakeNews());
   }, [dispatch]);
   useEffect(()=>{
+    if(location.search.indexOf("searchQuery") ==-1 || location.search.indexOf("&") ==-1){
+      return;
+    }
     console.log(location,"oooooooo")
     setSearchQuery(location.search.slice(13,location.search.indexOf("&")))
     console.log(location)

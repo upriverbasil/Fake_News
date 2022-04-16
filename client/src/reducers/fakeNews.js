@@ -8,12 +8,16 @@ export default (state=[], action) => {
                 numberOfPages: action.payload.numberOfPages,
             };
         case 'FETCH_BY_SEARCH':
+            
+            console.log(action.payload.data)
+            
             return {
                 ...state,
                 fakenews: action.payload.data,
                 currentPage: action.payload.currentPage,
                 numberOfPages: action.payload.numberOfPages,
             };
+            
         case 'FETCH_NEWS':
             return {...state, fakenewsitem: action.payload};
         case 'TRENDING':

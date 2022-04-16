@@ -23,10 +23,10 @@ export const getFakeNewsItem = async(req, res) => {
   const { id } = req.params
 
   try {
-    // console.log(req)
+    console.log(id,"oooo")
     const news = await fakeNews.findById(id);
 
-    // console.log(id)
+    console.log(news)
     res.status(200).json(news);
   } catch (error) {
     res.status(404).json({ message: error.message })
@@ -41,13 +41,15 @@ export const getFakeNewsBySearch = async(req, res) => {
     const startIndex = (Number(page) - 1) * LIMIT;    // starting fake news index
 
     const title = new RegExp(searchQuery, 'i');
+    
+      
+      const total = await fakeNews.countDocuments({title});;
 
-    const allNews = await fakeNews.find({ title }).sort({_id: -1});
-    const total = allNews.length;
-
-    const news = await fakeNews.find({ title }).sort({_id: -1}).limit(LIMIT).skip(startIndex);
-
-    res.status(200).json({ data: news, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
+      const news = await fakeNews.find({ title }).sort({_id: -1}).limit(LIMIT).skip(startIndex);
+      
+      res.status(200).json({ data: news, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
+    
+    
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

@@ -13,8 +13,10 @@ const Paginate = ({ searchQuery, page }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (page) dispatch(getFakeNewsBySearch(searchQuery, page));
-  }, [page]);
+    console.log(searchQuery,"ooooo",page)
+    if (page){dispatch(getFakeNewsBySearch(searchQuery, page));
+    }
+  }, [page,searchQuery]);
 
   return (
     <Pagination

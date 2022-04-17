@@ -23,7 +23,4 @@ export default makeStyles((theme) => ({
   trendingitem:{
     flexDirection:'row'
   },
-  item:{
-    flex:1
-  }
 }));

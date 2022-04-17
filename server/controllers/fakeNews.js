@@ -23,10 +23,8 @@ export const getFakeNewsItem = async(req, res) => {
   const { id } = req.params
 
   try {
-    console.log(id,"oooo")
     const news = await fakeNews.findById(id);
 
-    console.log(news)
     res.status(200).json(news);
   } catch (error) {
     res.status(404).json({ message: error.message })
@@ -37,37 +35,27 @@ export const getFakeNewsBySearch = async(req, res) => {
   const { searchQuery, page, lang} = req.query
   
   try {
-    // console.log(lang)
-    
     const LIMIT = 8;
     const startIndex = (Number(page) - 1) * LIMIT;    // starting fake news index
 
     const title = new RegExp(searchQuery, 'i');
       fakeNews.distinct("language", function(error, results){
-        // console.log(results);
       });
       
       let total = await fakeNews.countDocuments({title});
-      // console.log(total)
       let news = {}
-      if(lang=="null"){
-        // console.log("here")
-        
+      if(lang=="null"){        
         news = await fakeNews.find( { title }).sort({_id: -1}).limit(LIMIT).skip(startIndex);
       }
       else{
-        // console.log("here1")
         total = await fakeNews.countDocuments({ $and: [ { title }, { language:lang  }]} ) ;
-        news = await fakeNews.find({ $and: [ { title }, { language:lang  } ]}).sort({_id: -1}).limit(LIMIT).skip(startIndex);
-        
-        
+        news = await fakeNews.find({ $and: [ { title }, { language:lang  } ]}).sort({_id: -1}).limit(LIMIT).skip(startIndex);     
       }
       
       res.status(200).json({ data: news, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
     
     
   } catch (error) {
-    console.log(error.message)
     res.status(404).json({ message: error.message });
   }
 }
@@ -75,7 +63,6 @@ export const getFakeNewsBySearch = async(req, res) => {
 export const trending = async(req, res) => {
   try {
     const news = await fakeNews.find().sort({"upvotes":-1}).limit(5)
-    // console.log(news)
     res.json({ data: news });
 
   } catch (error) {

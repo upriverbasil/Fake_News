@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
-import { Grid, CircularProgress } from "@material-ui/core";
+import { Grid, CircularProgress, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
 import FakeNews from "./fakeNewsItem/FakeNewsItem";
 import useStyles from "./styles";
 
 const Fakenews = () => {
-  const { fakenews } = useSelector((state) => state.fakeNews);
+  const { fakenews, isLoading } = useSelector((state) => state.fakeNews);
   const classes = useStyles();
-  // useEffect(()=>{console.log("oooo")},)
-  return !fakenews?.length ? (
+
+  if (!fakenews.length && !isLoading)
+    return <Typography style={{ textAlign: 'center' }} variant="h4">No results</Typography>;
+
+  return isLoading ? (
     <CircularProgress alightItems="center" />
   ) : (
     <Grid

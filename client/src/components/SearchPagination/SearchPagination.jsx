@@ -7,17 +7,16 @@ import { getFakeNewsBySearch } from "../../actions/fakeNews";
 
 import useStyles from "./styles";
 
-const Paginate = ({ searchQuery, page, language}) => {
+const Paginate = ({ searchQuery, page, language }) => {
   const { numberOfPages } = useSelector((state) => state.fakeNews);
   const classes = useStyles();
   const dispatch = useDispatch();
 
-
   useEffect(() => {
-    console.log(searchQuery,"ooooo",page, language)
-    if (searchQuery && page){dispatch(getFakeNewsBySearch(searchQuery, page, language));
+    if (searchQuery && page) {
+      dispatch(getFakeNewsBySearch(searchQuery, page, language));
     }
-  }, [page,searchQuery,language]);
+  }, [page, searchQuery, language]);
 
   return (
     <Pagination

@@ -30,9 +30,14 @@ const Trending = () => {
       ) : (
         trendingList.map((news) => (
           <Grid key={news._id} item direction="row">
-            <div className={classes.trendingitem}>
-              <ButtonBase onClick={()=>{navigate(`/fake-news/${news._id}`)}}  className={classes.link}>
-                <div className={classes.item}>
+            <ButtonBase
+              onClick={() => {
+                navigate(`/fake-news/${news._id}`);
+              }}
+              className={classes.link}
+            >
+              <div className={classes.trendingitem}>
+                <div>
                   <img
                     style={{ objectFit: "cover" }}
                     height="100px"
@@ -50,13 +55,13 @@ const Trending = () => {
                     }
                   />
                 </div>
-                <div className={classes.item} style={{ marginBottom: "30px" }}>
+                <div style={{ marginBottom: "30px" }}>
                   <Typography variant="h6" display="block">
                     {news.title}
                   </Typography>
                 </div>
-                </ButtonBase>
-            </div>
+              </div>
+            </ButtonBase>
           </Grid>
         ))
       )}

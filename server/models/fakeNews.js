@@ -25,7 +25,7 @@ const fakeNewsSchema = mongoose.Schema({
         type: [String],
         default: []
     },
-    
+    language:String,
 })
 
 const fakeNews = mongoose.model('fakeNews',fakeNewsSchema)

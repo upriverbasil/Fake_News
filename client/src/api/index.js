@@ -13,7 +13,7 @@ API.interceptors.request.use((req) => {
 export const adminstatus = (email) => {console.log(email);return(API.get(`/user/adminStatus?email=${email}`));};
 export const fetchNewsItem = (id) => API.get(`/fake-news/${id}`);
 export const fetchNews = (page) => API.get(`/fake-news?page=${page}`);
-export const fetchNewsBySearch = (searchQuery, page) => API.get(`/fake-news/search?searchQuery=${searchQuery || 'none'}&page=${page}`);
+export const fetchNewsBySearch = (searchQuery, page, language) => API.get(`/fake-news/search?searchQuery=${searchQuery || 'none'}&page=${page}&lang=${language || 'none'}`);
 export const likeNews = (id) => API.patch(`/fake-news/${id}/likeNews`)
 export const dislikeNews = (id) => API.patch(`/fake-news/${id}/dislikeNews`)
 export const trending = () => API.get('/fake-news/trending')

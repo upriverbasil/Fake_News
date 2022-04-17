@@ -34,23 +34,40 @@ export const getFakeNewsItem = async(req, res) => {
 }
 
 export const getFakeNewsBySearch = async(req, res) => {
-  const { searchQuery, page } = req.query
-
+  const { searchQuery, page, lang} = req.query
+  
   try {
+    // console.log(lang)
+    
     const LIMIT = 8;
     const startIndex = (Number(page) - 1) * LIMIT;    // starting fake news index
 
     const title = new RegExp(searchQuery, 'i');
-    
+      fakeNews.distinct("language", function(error, results){
+        // console.log(results);
+      });
       
-      const total = await fakeNews.countDocuments({title});;
-
-      const news = await fakeNews.find({ title }).sort({_id: -1}).limit(LIMIT).skip(startIndex);
+      let total = await fakeNews.countDocuments({title});
+      // console.log(total)
+      let news = {}
+      if(lang=="null"){
+        // console.log("here")
+        
+        news = await fakeNews.find( { title }).sort({_id: -1}).limit(LIMIT).skip(startIndex);
+      }
+      else{
+        // console.log("here1")
+        total = await fakeNews.countDocuments({ $and: [ { title }, { language:lang  }]} ) ;
+        news = await fakeNews.find({ $and: [ { title }, { language:lang  } ]}).sort({_id: -1}).limit(LIMIT).skip(startIndex);
+        
+        
+      }
       
       res.status(200).json({ data: news, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
     
     
   } catch (error) {
+    console.log(error.message)
     res.status(404).json({ message: error.message });
   }
 }

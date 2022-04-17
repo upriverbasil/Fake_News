@@ -6,6 +6,10 @@ import {
   Avatar,
   Button,
   TextField,
+  Menu,
+  MenuList,
+  MenuItem,
+  Fade
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -23,6 +27,23 @@ const Navbar = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [search, setSearch] = useState("");
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [language, setLanguage] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const setfilter = (event) => {
+    if(event.target.outerText=="None"){
+      setLanguage(null)
+    }
+    else
+      setLanguage((event.target.outerText).toLowerCase())
+    setAnchorEl(null);
+  }
 
   useEffect(() => {
     const token = user?.token;
@@ -43,7 +64,7 @@ const Navbar = (props) => {
   const searchPost = (e) => {
     if (search.trim()) {
       // dispatch({type:'SEARCH',data:search});
-      navigate(`/fake-news/search?searchQuery=${search || "none"}&page=1`);
+      navigate(`/fake-news/search?searchQuery=${search || "none"}&page=1&lang=${language}`);
     } else {
       navigate("/");
     }
@@ -147,14 +168,50 @@ const Navbar = (props) => {
           className={classes.searchField}
         />
         <Button
-          onClick={searchPost}
-          className={classes.searchButton}
-          variant="contained"
-          color="primary"
-        >
-          Search
-        </Button>
-      </AppBar>
+        id="fade-button"
+        aria-controls={ Boolean(anchorEl) ? 'fade-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={ Boolean(anchorEl) ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        {language?language:"Filter"}
+      </Button>
+      <Menu
+        id="fade-menu"
+        MenuListProps={{
+          'aria-labelledby': 'fade-button',
+        }}
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+      >
+        <MenuItem onClick={setfilter}>None</MenuItem>
+        <MenuItem onClick={setfilter}>Assamese</MenuItem>
+        <MenuItem onClick={setfilter}>Bangla</MenuItem>
+        <MenuItem onClick={setfilter}>Bangladesh</MenuItem>
+        <MenuItem onClick={setfilter}>English</MenuItem>
+        <MenuItem onClick={setfilter}>Gujarati</MenuItem>
+        <MenuItem onClick={setfilter}>Hindi</MenuItem>
+        <MenuItem onClick={setfilter}>Malayalam</MenuItem>
+        <MenuItem onClick={setfilter}>Marathi</MenuItem>
+        <MenuItem onClick={setfilter}>Myanmar</MenuItem>
+        <MenuItem onClick={setfilter}>Odia</MenuItem>
+        <MenuItem onClick={setfilter}>Punjabi</MenuItem>
+        <MenuItem onClick={setfilter}>SriLanka</MenuItem>
+        <MenuItem onClick={setfilter}>Tamil</MenuItem>
+        <MenuItem onClick={setfilter}>Telugu</MenuItem>
+        <MenuItem onClick={setfilter}>Urdu</MenuItem>
+      </Menu>
+      <Button
+        onClick={searchPost}
+        className={classes.searchButton}
+        variant="contained"
+        color="primary"
+      >
+        Search
+      </Button>
+    </AppBar>
     </>
   );
 };

@@ -13,7 +13,9 @@ const Paginate = ({ page }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (page) dispatch(getFakeNews(page));
+    if (page) {
+      dispatch(getFakeNews(page));
+    }
   }, [page])
 
   return (

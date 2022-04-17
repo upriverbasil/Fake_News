@@ -28,26 +28,30 @@ const Home = () => {
   const classes = useStyles();
   const query = useQuery();
   const page = query.get("page") || 1;
-  const [searchQuery,setSearchQuery] = useState()
+  const [searchQuery, setSearchQuery] = useState();
   const location = useLocation();
-  const [language,setLanguage] = useState(null)
+  const [language, setLanguage] = useState(null);
+
   useEffect(() => {
     dispatch(trending());
-    dispatch(getFakeNews());
   }, [dispatch]);
-  useEffect(()=>{
-    if(location.search.indexOf("searchQuery") ==-1 || location.search.indexOf("&") ==-1){
+
+  useEffect(() => {
+    if (
+      location.search.indexOf("searchQuery") == -1 ||
+      location.search.indexOf("&") == -1
+    ) {
       return;
     }
-    console.log(location,"oooooooo")
-    setSearchQuery(location.search.slice(13,location.search.indexOf("&")))
-    console.log(location)
-    if(location.search.lastIndexOf("lang=")!=-1){
-      const lang = location.search.slice(location.search.lastIndexOf("lang=")+5)
-      setLanguage(lang)
+    setSearchQuery(location.search.slice(13, location.search.indexOf("&")));
+    if (location.search.lastIndexOf("lang=") != -1) {
+      const lang = location.search.slice(
+        location.search.lastIndexOf("lang=") + 5
+      );
+      setLanguage(lang);
     }
-    
-  },[location])
+  }, [location]);
+
   return (
     <Grow in>
       <Container maxWidth="xl">
@@ -66,7 +70,13 @@ const Home = () => {
               </Paper>
             ) : (
               <Paper className={classes.pagination} elevation={6}>
-                <SearchPagination searchQuery={searchQuery} page={page} language={language} variant="outlined" shape="rounded" />
+                <SearchPagination
+                  searchQuery={searchQuery}
+                  page={page}
+                  language={language}
+                  variant="outlined"
+                  shape="rounded"
+                />
               </Paper>
             )}
           </Grid>

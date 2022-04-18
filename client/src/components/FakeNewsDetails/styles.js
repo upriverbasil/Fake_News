@@ -36,4 +36,11 @@ export default makeStyles((theme) => ({
   loadingPaper: {
     display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', borderRadius: '15px', height: '39vh',
   },
+  commentsInnerContainer: {
+    height: '200px',
+    width: '70%',
+    overflowY: 'auto',
+    marginRight: '30px',
+    marginBottom: '30px',
+  },
 }));

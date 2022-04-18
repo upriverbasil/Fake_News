@@ -13,12 +13,10 @@ export const getFakeNewsItem = (id) => async (dispatch) => {
 export const getFakeNews = (page) => async (dispatch) => {
   try {
     dispatch({ type: "START_LOADING" });
-    console.log("started");
     const { data } = await api.fetchNews(page);
 
     dispatch({ type: "FETCH_ALL", payload: data });
     dispatch({ type: "END_LOADING" });
-    console.log("ended");
   } catch (error) {
     console.log(error.message);
   }
@@ -27,11 +25,11 @@ export const getFakeNews = (page) => async (dispatch) => {
 export const getFakeNewsBySearch =
   (searchQuery, page, language) => async (dispatch) => {
     try {
-      //dispatch({ type: "START_LOADING" });
+      dispatch({ type: "START_LOADING" });
       const { data } = await api.fetchNewsBySearch(searchQuery, page, language);
 
       dispatch({ type: "FETCH_BY_SEARCH", payload: data });
-      //dispatch({ type: "END_LOADING" });
+      dispatch({ type: "END_LOADING" });
     } catch (error) {
       console.log(error.message);
     }
@@ -66,6 +64,18 @@ export const dislikeNews = (id) => async (dispatch) => {
     console.log(error.message);
   }
 };
+
+export const commentNews = (value, id) => async (dispatch) => {
+  try {
+    const { data } = await api.comment(value, id);
+
+    dispatch({ type: "COMMENT", payload: data});
+
+    return data.comments;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 export const deleteNews = (id) => async (dispatch) => {
   try {

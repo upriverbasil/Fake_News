@@ -116,6 +116,19 @@ export const dislikeNews = async(req, res) => {
     res.status(200).json(updatedNews);
 }
 
+export const commentNews = async(req, res) => {
+  const { id } = req.params;
+  const { value } = req.body;
+
+  const news = await fakeNews.findById(id);
+
+  news.comments.push(value);
+
+  const updatedNews = await fakeNews.findByIdAndUpdate(id, news, { new: true});
+
+  res.json(updatedNews);
+}
+
 export const deleteNews = async(req, res) => {
   const {id} = req.params;
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No fake news with id: ${id}`);

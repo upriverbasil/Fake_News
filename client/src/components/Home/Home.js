@@ -64,11 +64,12 @@ const Home = () => {
         >
           <Grid item xs={12} sm={6} md={9}>
             <FakeNews />
-            {useLocation().pathname == "/fake-news" ? (
+            {useLocation().pathname == "/fake-news" && (
               <Paper className={classes.pagination} elevation={6}>
                 <Pagination page={page} variant="outlined" shape="rounded" />
               </Paper>
-            ) : (
+            )}
+            {useLocation().pathname == "/fake-news/search" && (
               <Paper className={classes.pagination} elevation={6}>
                 <SearchPagination
                   searchQuery={searchQuery}

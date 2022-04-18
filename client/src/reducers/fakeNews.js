@@ -37,6 +37,15 @@ export default (state = { fakenews: [], isLoading: true }, action) => {
           newsItem._id === action.payload._id ? action.payload : newsItem
         ),
       };
+    case "COMMENT":
+      return {
+        ...state,
+        fakenews: state.fakenews.map((newsItem) => {
+          if (newsItem._id === action.payload._id) return action.payload;
+          
+          return newsItem;
+        })
+      }
     default:
       return state;
   }

@@ -10,10 +10,17 @@ const Fakenews = () => {
   const classes = useStyles();
 
   if (!fakenews.length && !isLoading)
-    return <Typography style={{ textAlign: 'center' }} variant="h4">No results</Typography>;
+    return (
+      <Typography style={{ textAlign: "center" }} variant="h4">
+        No results
+      </Typography>
+    );
 
   return isLoading ? (
-    <CircularProgress alightItems="center" />
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <CircularProgress style={{ marginRight: '1em'}} />
+      <Typography variant="h4">Loading...</Typography>
+    </div>
   ) : (
     <Grid
       className={classes.container}

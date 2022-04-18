@@ -1,7 +1,7 @@
 import fakeNews from "../models/fakeNews.js";
 import user from "../models/user.js"
 import mongoose from 'mongoose';
-
+import jsonData from "../DirtyWords.js"
 export const getFakeNews = async(req,res) => {
   const { page } = req.query
 
@@ -118,10 +118,15 @@ export const dislikeNews = async(req, res) => {
 
 export const commentNews = async(req, res) => {
   const { id } = req.params;
-  const { value } = req.body;
+  let { value } = req.body;
 
   const news = await fakeNews.findById(id);
-
+  // var json = []
+  // fetch('../DirtyWords.json').then(response => json = response.json())
+  for(let i=0;i<jsonData.length;i++){
+    value = value.replaceAll(jsonData[i].word,"*".repeat(jsonData[i].word.length))
+  }
+  // if(jsonData.find(({word})=>word===value))
   news.comments.push(value);
 
   const updatedNews = await fakeNews.findByIdAndUpdate(id, news, { new: true});

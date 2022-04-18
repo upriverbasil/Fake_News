@@ -16,6 +16,7 @@ export const fetchNews = (page) => API.get(`/fake-news?page=${page}`);
 export const fetchNewsBySearch = (searchQuery, page, language) => API.get(`/fake-news/search?searchQuery=${searchQuery || 'none'}&page=${page}&lang=${language || 'none'}`);
 export const likeNews = (id) => API.patch(`/fake-news/${id}/likeNews`)
 export const dislikeNews = (id) => API.patch(`/fake-news/${id}/dislikeNews`)
+export const comment = (value, id) => API.post(`/fake-news/${id}/commentNews`, { value })
 export const trending = () => API.get('/fake-news/trending')
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);

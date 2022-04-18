@@ -61,7 +61,6 @@ const Navbar = (props) => {
 
   const searchPost = (e) => {
     if (search.trim()) {
-      // dispatch({type:'SEARCH',data:search});
       navigate(
         `/fake-news/search?searchQuery=${
           search || "none"
@@ -76,7 +75,6 @@ const Navbar = (props) => {
     const search = e.currentTarget.value;
 
     if (search.trim()) {
-      // dispatch({ type: "SEARCH", data: search });
       navigate(
         `/fake-news/search?searchQuery=${
           search || "none"
@@ -181,7 +179,7 @@ const Navbar = (props) => {
           aria-expanded={Boolean(anchorEl) ? "true" : undefined}
           onClick={handleClick}
         >
-          {language ? language : "Language"}
+          {language ? language : "All Languages"}
         </Button>
         <Menu
           id="fade-menu"

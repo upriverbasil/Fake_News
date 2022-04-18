@@ -24,10 +24,9 @@ import { getFakeNewsItem, getRecommended } from "../../actions/fakeNews";
 import useStyles from "./styles";
 import { deleteNews } from "../../actions/fakeNews";
 import FakeNews from "../fakeNews/fakeNewsItem/FakeNewsItem.js";
-import {
-  likeNews,
-  dislikeNews
-} from "../../actions/fakeNews";
+import { likeNews, dislikeNews } from "../../actions/fakeNews";
+import CommentsSection from "./CommentsSection";
+
 import ThumbUpAltOutlined from "@material-ui/icons/ThumbUpAltOutlined";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbDownAltOutlined from "@material-ui/icons/ThumbDownAltOutlined";
@@ -77,11 +76,10 @@ const FakeNewsDetails = () => {
     }
   }, [fakenewsitem]);
 
- 
   const openNews = (_id) => {
     navigate(`/fake-news/${_id}`);
   };
-  const Likes = ({news}) => {
+  const Likes = ({ news }) => {
     // console.log(news)
     if (news.upvotes.length > 0) {
       return news.upvotes.find(
@@ -112,8 +110,8 @@ const FakeNewsDetails = () => {
       </>
     );
   };
-  const DisLikes = ({news}) => {
-    console.log(news)
+  const DisLikes = ({ news }) => {
+    console.log(news);
     if (news.downvotes.length > 0) {
       return news.downvotes.find(
         (like) => like === (user?.result?.googleId || user?.result?._id)
@@ -179,7 +177,7 @@ const FakeNewsDetails = () => {
                 color="textSecondary"
                 component="h2"
               >
-                {fakenewsitem?.tags ?(
+                {fakenewsitem?.tags ? (
                   fakenewsitem.tags.map(
                     (tag) => `#${tag.split(" ").join("_")} `
                   )
@@ -187,7 +185,7 @@ const FakeNewsDetails = () => {
                   <></>
                 )}
               </Typography>
-              
+
               <Typography gutterBottom variant="body1" component="p">
                 {fakenewsitem?.summary
                   ? fakenewsitem?.summary
@@ -207,7 +205,6 @@ const FakeNewsDetails = () => {
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
-            
             <div className={classes.imageSection}>
               {newsImage != "" ? (
                 <img
@@ -221,38 +218,42 @@ const FakeNewsDetails = () => {
             </div>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            
-              <Divider style={{ margin: "10px 0 20px 0" }} />
-              {/* <Typography variant="h5"><strong>LIKE OR DISLIKE</strong></Typography> */}
+            <Divider style={{ margin: "10px 0 20px 0" }} />
+            {/* <Typography variant="h5"><strong>LIKE OR DISLIKE</strong></Typography> */}
+            <Button
+              size="large"
+              color="primary"
+              disabled={!user?.result}
+              onClick={() => {
+                dispatch(likeNews(fakenewsitem._id));
+                window.location.reload();
+              }}
+            >
+              <Likes news={fakenewsitem} />
+            </Button>
+            <Button
+              size="large"
+              color="primary"
+              disabled={!user?.result}
+              onClick={() => {
+                dispatch(dislikeNews(fakenewsitem._id));
+                window.location.reload();
+              }}
+            >
+              <DisLikes news={fakenewsitem} />
+            </Button>
+            {user?.adminStatus ? (
               <Button
                 size="large"
                 color="primary"
-                disabled={!user?.result}
-                onClick={() => {dispatch(likeNews(fakenewsitem._id));window.location.reload();}}
+                onClick={() => {
+                  dispatch(deleteNews(fakenewsitem._id));
+                  window.location.reload();
+                }}
               >
-                <Likes news={fakenewsitem} />
+                <DeleteIcon fontSize="large" /> Delete
               </Button>
-              <Button
-                size="large"
-                color="primary"
-                disabled={!user?.result}
-                onClick={() => {dispatch(dislikeNews(fakenewsitem._id));window.location.reload();}}
-              >
-                <DisLikes news={fakenewsitem} />
-              </Button>
-              {user?.adminStatus ? (
-                  <Button
-                    size="large"
-                    color="primary"
-                    onClick={() => {
-                      dispatch(deleteNews(fakenewsitem._id));
-                      window.location.reload();
-                    }}
-                  >
-                    <DeleteIcon fontSize="large"  /> Delete
-                  </Button>
-              ) : null}
-            
+            ) : null}
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <div className={classes.imageSection}>
@@ -284,9 +285,7 @@ const FakeNewsDetails = () => {
           <Grid item xs={12} sm={12} md={12}>
             <div className={classes.section}>
               <Divider style={{ margin: "0px 0 10px 0" }} />
-              <Typography variant="h5">
-                <strong>Comments</strong>
-              </Typography>
+              <CommentsSection news={fakenewsitem} />
             </div>
           </Grid>
 
@@ -299,7 +298,7 @@ const FakeNewsDetails = () => {
             </div>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
-          <Grid
+            <Grid
               className={classes.container}
               container
               alignItems="stretch"

@@ -37,7 +37,6 @@ const NewAdmin = () => {
     try {
       await addnewadmin({ email: textValue });
       navigate("/");
-      console.log(textValue);
     } catch (error) {
       if (error.response) {
         alert(
@@ -52,7 +51,9 @@ const NewAdmin = () => {
   return (
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper}>
-        <Typography className={classes.headline} variant="h4">Add New Admin</Typography>
+        <Typography className={classes.headline} variant="h4">
+          Add New Admin
+        </Typography>
 
         <TextField
           className={classes.form}
@@ -61,8 +62,12 @@ const NewAdmin = () => {
           label={"Email Id"} //optional
         />
 
-        <Button className={classes.submit} onClick={handleSubmit}>Submit</Button>
-        <Button className={classes.reset} onClick={handleReset}>Reset</Button>
+        <Button className={classes.submit} onClick={handleSubmit}>
+          Submit
+        </Button>
+        <Button className={classes.reset} onClick={handleReset}>
+          Reset
+        </Button>
       </Paper>
     </Container>
   );

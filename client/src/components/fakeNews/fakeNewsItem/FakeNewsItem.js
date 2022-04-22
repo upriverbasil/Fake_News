@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Card,
   CardActions,
@@ -18,6 +19,7 @@ import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbDownAltOutlined from "@material-ui/icons/ThumbDownAltOutlined";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
 import DeleteIcon from "@material-ui/icons/Delete";
+
 import {
   likeNews,
   dislikeNews,
@@ -25,7 +27,7 @@ import {
   deleteNews,
 } from "../../../actions/fakeNews";
 import useStyles from "./styles";
-import { useNavigate, useLocation } from "react-router-dom";
+
 import Boom from "../../../images/Boom.png";
 import IndiaToday from "../../../images/IndiaToday.png";
 import FactCrescendo from "../../../images/FactCrescendo.png";
@@ -36,6 +38,7 @@ import Factly from "../../../images/Factly.png";
 import NewsMobile from "../../../images/NewsMobile.png";
 import NewsChecker from "../../../images/NewsChecker.png";
 import DigitEye from "../../../images/DigitEye.jpeg";
+
 const FakeNewsItem = ({ news }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -72,7 +75,7 @@ const FakeNewsItem = ({ news }) => {
         DigitEye,
       ];
       let website = news.websiteName;
-      // console.log(website.split(" ").join(""))
+
       const location = "../../../images/";
       for (let i = 0; i < allowed_webnames.length; i++) {
         if (
@@ -84,7 +87,6 @@ const FakeNewsItem = ({ news }) => {
         ) {
           setWebName(allowed_webnames[i]);
           setImage(imagenames[i]);
-          // console.log(image)
           break;
         }
         if (
@@ -99,9 +101,9 @@ const FakeNewsItem = ({ news }) => {
           break;
         }
       }
-      // console.log(website)
     }
   }, [news]);
+
   const Likes = () => {
     if (news.upvotes.length > 0) {
       return news.upvotes.find(

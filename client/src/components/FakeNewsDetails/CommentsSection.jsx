@@ -26,14 +26,21 @@ const CommentsSection = ({ news }) => {
       <Typography gutterBottom variant="h5">
         <strong>Comments</strong>
       </Typography>
-      <div className={classes.commentsInnerContainer}>
-        {comments.reverse().map((comment, index) => (
-          <Typography key={index} gutterBottom variant="subtitle1">
-            <strong>{comment.split(": ")[0]}:</strong>
-            {comment.split(":")[1]}
-          </Typography>
-        ))}
-      </div>
+      {comments.length <= 0 ? (
+        <Typography gutterBottom variant="subtitle1">
+          No comments yet!
+        </Typography>
+      ) : (
+        <div className={classes.commentsInnerContainer}>
+          {comments.map((comment, index) => (
+            <Typography key={index} gutterBottom variant="subtitle1">
+              <strong>{comment.split(": ")[0]}:</strong>
+              {comment.split(":")[1]}
+            </Typography>
+          ))}
+        </div>
+      )}
+
       {user?.result?.name && (
         <div style={{ width: "70%" }}>
           <TextField

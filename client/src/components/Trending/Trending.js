@@ -17,9 +17,8 @@ const Trending = () => {
   const classes = useStyles();
   const trendingList = useSelector((state) => state.fakeNews)?.trending?.data;
   const navigate = useNavigate();
-  useEffect(() => {
-    // console.log(trendingList.length, "ooooo");
-  }, [trendingList]);
+
+  useEffect(() => {}, [trendingList]);
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">

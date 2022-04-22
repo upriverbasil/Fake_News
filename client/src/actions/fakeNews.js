@@ -89,11 +89,10 @@ export const deleteNews = (id) => async (dispatch) => {
 
 export const getRecommended = (searchQuery) => async (dispatch) => {
   try {
-    console.log(searchQuery, "iiiii");
     const {
       data: { data },
     } = await api.recommendedPosts(searchQuery);
-    // console.log("oooo",data)
+    
     dispatch({ type: "RECOMMENDED", payload: data });
   } catch (error) {
     console.log(error.message);

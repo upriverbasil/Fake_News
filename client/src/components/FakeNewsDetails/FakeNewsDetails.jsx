@@ -69,7 +69,6 @@ const FakeNewsDetails = () => {
   }, [id]);
   useEffect(() => {
     if (fakenewsitem) {
-      console.log("pppp", fakenewsitem?.tags);
       dispatch(
         getRecommended({ search: "none", tags: fakenewsitem?.tags?.join(",") })
       );
@@ -80,7 +79,6 @@ const FakeNewsDetails = () => {
     navigate(`/fake-news/${_id}`);
   };
   const Likes = ({ news }) => {
-    // console.log(news)
     if (news.upvotes.length > 0) {
       return news.upvotes.find(
         (like) => like === (user?.result?.googleId || user?.result?._id)
@@ -111,7 +109,6 @@ const FakeNewsDetails = () => {
     );
   };
   const DisLikes = ({ news }) => {
-    console.log(news);
     if (news.downvotes.length > 0) {
       return news.downvotes.find(
         (like) => like === (user?.result?.googleId || user?.result?._id)
@@ -192,7 +189,7 @@ const FakeNewsDetails = () => {
                   : fakenewsitem?.content}
               </Typography>
 
-              <Typography variant="h6">
+              <Typography gutterBottom variant="h6">
                 <strong>
                   Read more on{" "}
                   <a href={fakenewsitem?.articleLink} target="_blank">
@@ -201,6 +198,41 @@ const FakeNewsDetails = () => {
                   .
                 </strong>
               </Typography>
+
+              <Button
+                size="large"
+                color="primary"
+                disabled={!user?.result}
+                onClick={() => {
+                  dispatch(likeNews(fakenewsitem._id));
+                  window.location.reload();
+                }}
+              >
+                <Likes news={fakenewsitem} />
+              </Button>
+              <Button
+                size="large"
+                color="primary"
+                disabled={!user?.result}
+                onClick={() => {
+                  dispatch(dislikeNews(fakenewsitem._id));
+                  window.location.reload();
+                }}
+              >
+                <DisLikes news={fakenewsitem} />
+              </Button>
+              {user?.adminStatus ? (
+                <Button
+                  size="large"
+                  color="primary"
+                  onClick={() => {
+                    dispatch(deleteNews(fakenewsitem._id));
+                    window.location.reload();
+                  }}
+                >
+                  <DeleteIcon fontSize="large" /> Delete
+                </Button>
+              ) : null}
             </div>
           </Grid>
 
@@ -217,44 +249,7 @@ const FakeNewsDetails = () => {
               )}
             </div>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <Divider style={{ margin: "10px 0 20px 0" }} />
-            {/* <Typography variant="h5"><strong>LIKE OR DISLIKE</strong></Typography> */}
-            <Button
-              size="large"
-              color="primary"
-              disabled={!user?.result}
-              onClick={() => {
-                dispatch(likeNews(fakenewsitem._id));
-                window.location.reload();
-              }}
-            >
-              <Likes news={fakenewsitem} />
-            </Button>
-            <Button
-              size="large"
-              color="primary"
-              disabled={!user?.result}
-              onClick={() => {
-                dispatch(dislikeNews(fakenewsitem._id));
-                window.location.reload();
-              }}
-            >
-              <DisLikes news={fakenewsitem} />
-            </Button>
-            {user?.adminStatus ? (
-              <Button
-                size="large"
-                color="primary"
-                onClick={() => {
-                  dispatch(deleteNews(fakenewsitem._id));
-                  window.location.reload();
-                }}
-              >
-                <DeleteIcon fontSize="large" /> Delete
-              </Button>
-            ) : null}
-          </Grid>
+
           <Grid item xs={12} sm={12} md={12}>
             <div className={classes.imageSection}>
               <Divider style={{ margin: "10px 0 20px 0" }} />

@@ -190,6 +190,7 @@ const Navbar = (props) => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
           TransitionComponent={Fade}
+          variant="contained"
         >
           <MenuItem onClick={setfilter}>None</MenuItem>
           <MenuItem onClick={setfilter}>Assamese</MenuItem>

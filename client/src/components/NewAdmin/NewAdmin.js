@@ -62,10 +62,10 @@ const NewAdmin = () => {
           label={"Email Id"} //optional
         />
 
-        <Button className={classes.submit} onClick={handleSubmit}>
+        <Button className={classes.submit} onClick={handleSubmit} variant="contained" color="primary">
           Submit
         </Button>
-        <Button className={classes.reset} onClick={handleReset}>
+        <Button className={classes.reset} onClick={handleReset} variant="contained" color="primary">
           Reset
         </Button>
       </Paper>

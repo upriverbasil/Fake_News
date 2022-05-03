@@ -110,27 +110,27 @@ const FakeNewsItem = ({ news }) => {
         (like) => like === (user?.result?.googleId || user?.result?._id)
       ) ? (
         <>
-          <ThumbUpAltIcon fontSize="small" />
+          <ThumbUpAltIcon fontSize="medium" />
           &nbsp;
           {news.upvotes.length > 2
             ? `You and ${news.upvotes.length - 1} others`
-            : `${news.upvotes.length} like${
-                news.upvotes.length > 1 ? "s" : ""
+            : `${news.upvotes.length} ${
+                news.upvotes.length > 1 ? "" : ""
               }`}
         </>
       ) : (
         <>
-          <ThumbUpAltOutlined fontSize="small" />
+          <ThumbUpAltOutlined fontSize="medium" />
           &nbsp;{news.upvotes.length}{" "}
-          {news.upvotes.length === 1 ? "Like" : "Likes"}
+          {news.upvotes.length === 1 ? "" : ""}
         </>
       );
     }
 
     return (
       <>
-        <ThumbUpAltOutlined fontSize="small" />
-        &nbsp;Like
+        <ThumbUpAltOutlined fontSize="medium" />
+        &nbsp;
       </>
     );
   };
@@ -141,27 +141,27 @@ const FakeNewsItem = ({ news }) => {
         (like) => like === (user?.result?.googleId || user?.result?._id)
       ) ? (
         <>
-          <ThumbDownAltIcon fontSize="small" />
+          <ThumbDownAltIcon fontSize="medium" />
           &nbsp;
           {news.downvotes.length > 2
             ? `You and ${news.downvotes.length - 1} others`
-            : `${news.downvotes.length} Dislike${
-                news.downvotes.length > 1 ? "s" : ""
+            : `${news.downvotes.length} ${
+                news.downvotes.length > 1 ? "" : ""
               }`}
         </>
       ) : (
         <>
-          <ThumbDownAltOutlined fontSize="small" />
+          <ThumbDownAltOutlined fontSize="medium" />
           &nbsp;{news.downvotes.length}{" "}
-          {news.downvotes.length === 1 ? "DisLike" : "DisLikes"}
+          {news.downvotes.length === 1 ? "" : ""}
         </>
       );
     }
 
     return (
       <>
-        <ThumbDownAltOutlined fontSize="small" />
-        &nbsp;DisLike
+        <ThumbDownAltOutlined fontSize="medium" />
+        &nbsp;
       </>
     );
   };
@@ -205,6 +205,15 @@ const FakeNewsItem = ({ news }) => {
             {moment(news.publishDate, "DD-MM-YYYY HH:mm:ss").fromNow()}
           </Typography>
         </div>
+        <div style={{marginTop: '20px'}}/>
+        <Typography
+          className={classes.title}
+          gutterBottom
+          variant="h5"
+          component="h2"
+        >
+          {news.title.length > 40 ? news.title.slice(0, 40) + "..." : news.title}
+        </Typography>
         <div className={classes.details}>
           <Typography variant="body2" color="textSecondary" component="h2">
             {news.tags == null
@@ -212,14 +221,6 @@ const FakeNewsItem = ({ news }) => {
               : news.tags.map((tag) => `#${tag.split(" ").join("_")} `)}
           </Typography>
         </div>
-        <Typography
-          className={classes.title}
-          gutterBottom
-          variant="h5"
-          component="h2"
-        >
-          {news.title}
-        </Typography>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {news.message}
@@ -252,7 +253,7 @@ const FakeNewsItem = ({ news }) => {
               window.location.reload();
             }}
           >
-            <DeleteIcon fontSize="small" /> Delete
+            <DeleteIcon fontSize="medium" />
           </Button>
         ) : null}
       </CardActions>

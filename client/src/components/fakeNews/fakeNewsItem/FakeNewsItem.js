@@ -56,7 +56,7 @@ const FakeNewsItem = ({ news }) => {
         "Alt News",
         "BOOM",
         "WebQoof",
-        "Vishvas News",
+        "Vishwas",
         "Factly",
         "NewsMobile",
         "Newschecker",
